@@ -93,6 +93,18 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
     return () => window.removeEventListener('popstate', handlePopState);
   }, [isInsideIframe, isDesktop]);
 
+  // Prevent any parent desktop window scrolling triggered by child iframes
+  useEffect(() => {
+    if (isInsideIframe || !isDesktop) return;
+    const lockDesktopScroll = () => {
+      if (window.scrollY !== 0 || window.scrollX !== 0) {
+        window.scrollTo(0, 0);
+      }
+    };
+    window.addEventListener('scroll', lockDesktopScroll, { passive: true });
+    return () => window.removeEventListener('scroll', lockDesktopScroll);
+  }, [isInsideIframe, isDesktop]);
+
   // ON MOBILE (< 768px) OR INSIDE IFRAME: Render children directly with zero wrapper
   if (isInsideIframe || !isDesktop) {
     return <>{children}</>;

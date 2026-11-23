@@ -36,7 +36,7 @@ export const ServicesPage: React.FC = () => {
           src="/images/client/after-school-class.png"
           onError={(e) => { e.currentTarget.src = '/images/after-school.jpg'; }}
           alt="Bricks 4 Kidz Official LEGO Enrichment Class"
-          className="w-full h-40 object-cover"
+          className="w-full h-auto block"
         />
         <div className="p-gutter-md flex flex-col gap-gutter-sm">
           <Badge variant="primary" className="self-start">

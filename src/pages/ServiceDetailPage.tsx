@@ -41,30 +41,34 @@ export const ServiceDetailPage: React.FC = () => {
 
       {/* Hero Header */}
       <section className="rounded-2xl bg-card border border-border overflow-hidden shadow-sm">
-        <img
-          src={program.imageUrl}
-          onError={(e) => { e.currentTarget.src = '/images/hero-lego.jpg'; }}
-          alt={program.title}
-          className="w-full h-48 object-cover"
-        />
+        <div className="w-full bg-slate-50 flex items-center justify-center overflow-hidden">
+          <img
+            src={program.imageUrl}
+            onError={(e) => { e.currentTarget.src = '/images/hero-lego.jpg'; }}
+            alt={program.title}
+            className="w-full h-auto block"
+          />
+        </div>
         <div className="p-gutter-md flex flex-col gap-gutter-sm">
           <div className="flex items-center justify-between gap-2">
             <Badge variant="primary">{program.ageLabel}</Badge>
-            <span className="font-mono text-label-sm text-primary font-bold">{program.priceOrNote}</span>
+            <span className="font-body text-body-sm font-bold text-primary tracking-tight">
+              {program.priceOrNote}
+            </span>
           </div>
 
-          <h1 className="font-headline text-display-lg-mobile text-foreground font-bold leading-tight">
+          <h1 className="font-headline text-title-lg text-foreground font-bold leading-tight">
             {program.title}
           </h1>
-          <p className="font-body text-body-md text-muted-foreground">
+          <p className="font-body text-body-sm text-muted-foreground leading-relaxed">
             {program.subtitle}
           </p>
 
           <div className="pt-2">
             <Button
-              variant="accent"
+              variant="primary"
               size="lg"
-              className="w-full gap-2 shadow-md"
+              className="w-full font-bold rounded-xl shadow-xs py-3 text-body-sm"
               onClick={() =>
                 onOpenStripe({
                   title: program.title,
@@ -73,7 +77,7 @@ export const ServiceDetailPage: React.FC = () => {
                 })
               }
             >
-              <span>Enroll / Reserve Now ({program.priceOrNote})</span>
+              <span>Enroll Now • {program.priceOrNote}</span>
             </Button>
           </div>
         </div>
@@ -137,25 +141,34 @@ export const ServiceDetailPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Bottom Sticky Action Card */}
-      <Card className="flex flex-col gap-3 border-2 border-primary">
-        <div className="flex items-center justify-between">
-          <div>
+      {/* Bottom Action Card */}
+      <div className="rounded-2xl bg-card border border-border p-4 shadow-sm flex flex-col gap-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-col">
             <h3 className="font-headline text-title-md text-foreground font-bold">Ready to Join?</h3>
-            <p className="font-body text-body-sm text-muted-foreground">{program.recommendedAge}</p>
+            <span className="font-body text-xs text-muted-foreground mt-0.5">{program.recommendedAge}</span>
           </div>
-          <span className="font-mono text-title-md text-primary font-bold">{program.priceOrNote}</span>
+          <span className="font-body text-sm font-bold text-primary tracking-tight text-right shrink-0 whitespace-nowrap">
+            {program.priceOrNote}
+          </span>
         </div>
+
         <Button
           variant="primary"
           size="lg"
-          onClick={() => navigate('/booking')}
-          className="w-full gap-2 shadow-md"
+          onClick={() =>
+            onOpenStripe({
+              title: program.title,
+              price: program.priceNumber ? `$${program.priceNumber}.00` : '$150.00',
+              subtitle: program.subtitle,
+            })
+          }
+          className="w-full h-11 font-bold rounded-xl shadow-xs text-body-sm gap-2"
         >
-          <Calendar size={18} />
-          <span>Proceed to Booking Workflow</span>
+          <Calendar size={17} />
+          <span>Enroll Now</span>
         </Button>
-      </Card>
+      </div>
 
     </div>
   );

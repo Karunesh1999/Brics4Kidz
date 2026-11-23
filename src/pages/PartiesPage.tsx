@@ -21,7 +21,10 @@ export const PartiesPage: React.FC = () => {
   const handleSelectPackage = (pkgName: string) => {
     setSelectedPkg(pkgName);
     const formEl = document.getElementById('party-form');
-    formEl?.scrollIntoView({ behavior: 'smooth' });
+    if (formEl) {
+      const targetY = formEl.getBoundingClientRect().top + window.scrollY - 15;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+    }
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -37,6 +40,9 @@ export const PartiesPage: React.FC = () => {
       subtitle: `${hostName ? `Host: ${hostName} • ` : ''}${selectedLoc}`,
     });
   };
+
+  const isPremium = selectedPkg.includes('Premium');
+  const isSupreme = selectedPkg.includes('Supreme');
 
   return (
     <div className="flex flex-col gap-gutter-lg pt-gutter-md pb-12">
@@ -56,9 +62,6 @@ export const PartiesPage: React.FC = () => {
           <h1 className="font-headline text-display-lg-mobile text-foreground font-bold leading-tight">
             Unforgettable Birthday Parties
           </h1>
-          <p className="font-body text-body-md text-muted-foreground leading-relaxed">
-            Hosted at your home or our Franklin venue. Our certified party host brings all LEGO® bricks, motorized builds, and derby racing games.
-          </p>
         </div>
       </section>
 
@@ -69,82 +72,131 @@ export const PartiesPage: React.FC = () => {
         </h2>
 
         {/* Premium */}
-        <Card className="flex flex-col gap-gutter-sm shadow-sm hover:border-primary transition-colors">
-          <div className="flex items-center justify-between gap-gutter-sm">
+        <Card 
+          onClick={() => handleSelectPackage('Premium — $249 (10 guests, 75m)')}
+          className={`flex flex-col gap-3 transition-all cursor-pointer ${
+            isPremium 
+              ? 'border-2 border-primary shadow-md ring-1 ring-primary/20 bg-primary/[0.02]' 
+              : 'border border-border shadow-sm hover:border-primary/50'
+          }`}
+        >
+          <div className="flex items-start justify-between gap-3">
             <div>
-              <h3 className="font-headline text-title-md text-foreground font-bold">Premium Party</h3>
-              <p className="font-body text-body-sm text-muted-foreground">Up to 10 guests • 75 minutes</p>
+              <div className="flex items-center gap-2">
+                <h3 className="font-headline text-lg font-bold text-foreground leading-tight">Premium Party</h3>
+                {isPremium && (
+                  <span className="text-[10px] font-bold bg-primary text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <Check size={11} /> Selected
+                  </span>
+                )}
+              </div>
+              <p className="font-body text-xs text-muted-foreground mt-0.5">Up to 10 guests • 75 minutes</p>
             </div>
-            <span className="font-mono text-title-md text-primary font-bold tabular-nums">$249.00</span>
+            <span className="font-headline text-xl font-bold text-primary tracking-tight shrink-0">$249.00</span>
           </div>
 
-          <p className="font-body text-body-md text-muted-foreground">
-            Dedicated Bricks 4 Kidz host, motorized model build, creative free play, and birthday child gift. (Venue not included.)
-          </p>
-
-          <div className="flex flex-col gap-1.5 py-2 border-y border-border">
+          <div className="flex flex-col gap-2 py-2.5 border-y border-border">
             {PARTY_PACKAGES[0].features.map((feat, idx) => (
-              <div key={idx} className="flex items-center gap-2 text-body-sm text-foreground">
-                <Check size={16} className="text-secondary shrink-0" />
+              <div key={idx} className="flex items-start gap-2 text-xs text-foreground">
+                <Check size={15} className="text-secondary shrink-0 mt-0.5" />
                 <span>{feat}</span>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-between pt-gutter-xs">
-            <span className="text-xs text-muted-foreground font-medium">Themes: Minecraft, Star Wars, Heroes</span>
-            <Button
-              variant="outline"
-              size="md"
-              onClick={() => handleSelectPackage('Premium — $249 (10 guests, 75m)')}
-            >
-              Select Premium
-            </Button>
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="font-semibold text-slate-700">Themes:</span>
+            <span>Minecraft, Star Wars, Superheroes, Derby</span>
           </div>
+
+          <Button
+            variant={isPremium ? 'primary' : 'outline'}
+            size="md"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelectPackage('Premium — $249 (10 guests, 75m)');
+            }}
+            className={`w-full h-10 text-xs font-bold rounded-xl mt-1 transition-all ${
+              isPremium ? 'shadow-xs' : 'hover:bg-slate-50'
+            }`}
+          >
+            {isPremium ? '✓ Premium Package Selected' : 'Select Premium Package'}
+          </Button>
         </Card>
 
         {/* Supreme */}
-        <Card className="flex flex-col gap-gutter-sm shadow-md border-2 border-primary relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-accent text-accent-foreground text-label-sm font-bold px-3 py-1 rounded-bl-xl shadow-xs flex items-center gap-1">
-            <Star size={13} fill="currentColor" />
+        <Card 
+          onClick={() => handleSelectPackage('Supreme — $349 (12 guests, 90m)')}
+          className={`flex flex-col gap-3 relative overflow-hidden transition-all cursor-pointer ${
+            isSupreme 
+              ? 'border-2 border-primary shadow-md ring-1 ring-primary/20 bg-primary/[0.02]' 
+              : 'border border-border shadow-sm hover:border-primary/50'
+          }`}
+        >
+          <div className="absolute top-0 right-0 bg-accent text-accent-foreground text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-xs flex items-center gap-1">
+            <Star size={12} fill="currentColor" />
             <span>Most Popular</span>
           </div>
 
-          <div className="flex items-center justify-between gap-gutter-sm pt-2">
+          <div className="flex items-start justify-between gap-3 pt-1">
             <div>
-              <h3 className="font-headline text-title-md text-foreground font-bold">Supreme Party</h3>
-              <p className="font-body text-body-sm text-muted-foreground">Up to 12 guests • 90 minutes</p>
+              <div className="flex items-center gap-2">
+                <h3 className="font-headline text-lg font-bold text-foreground leading-tight">Supreme Party</h3>
+                {isSupreme && (
+                  <span className="text-[10px] font-bold bg-primary text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <Check size={11} /> Selected
+                  </span>
+                )}
+              </div>
+              <p className="font-body text-xs text-muted-foreground mt-0.5">Up to 12 guests • 90 minutes</p>
             </div>
-            <span className="font-mono text-title-md text-primary font-bold tabular-nums">$349.00</span>
+            <span className="font-headline text-xl font-bold text-primary tracking-tight shrink-0">$349.00</span>
           </div>
 
-          <p className="font-body text-body-md text-muted-foreground">
-            Everything in Premium plus 2 extra guests, 15 extra minutes, LEGO® mini-figure favors for every child, and derby car tournament.
-          </p>
-
-          <div className="flex flex-col gap-1.5 py-2 border-y border-border">
+          <div className="flex flex-col gap-2 py-2.5 border-y border-border">
             {PARTY_PACKAGES[1].features.map((feat, idx) => (
-              <div key={idx} className="flex items-center gap-2 text-body-sm text-foreground font-medium">
-                <Check size={16} className="text-primary shrink-0" />
+              <div key={idx} className="flex items-start gap-2 text-xs text-foreground font-medium">
+                <Check size={15} className="text-primary shrink-0 mt-0.5" />
                 <span>{feat}</span>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-between pt-gutter-xs">
-            <span className="text-xs text-secondary font-bold flex items-center gap-1">
-              <Gift size={14} /> Includes Mini-Figure Favors
+          <div className="flex items-center justify-between text-xs text-secondary font-bold bg-secondary/10 px-3 py-2 rounded-xl border border-secondary/20">
+            <span className="flex items-center gap-1.5">
+              <Gift size={14} /> Includes Custom Mini-Figure Favors
             </span>
-            <Button
-              variant="primary"
-              size="md"
-              className="gap-2 shadow-sm font-bold"
-              onClick={() => handleSelectPackage('Supreme — $349 (12 guests, 90m)')}
-            >
-              <PartyPopper size={16} />
-              <span>Select Supreme</span>
-            </Button>
+            <span className="text-[10px] bg-secondary text-white px-2 py-0.5 rounded-full font-bold">Included</span>
           </div>
+
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="font-semibold text-slate-700">Themes:</span>
+            <span>Minecraft, Star Wars, Superheroes, Ninjago</span>
+          </div>
+
+          <Button
+            variant={isSupreme ? 'primary' : 'outline'}
+            size="md"
+            className={`w-full h-10 text-xs font-bold rounded-xl mt-1 gap-2 transition-all ${
+              isSupreme ? 'shadow-xs' : 'hover:bg-slate-50'
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelectPackage('Supreme — $349 (12 guests, 90m)');
+            }}
+          >
+            {isSupreme ? (
+              <>
+                <Check size={16} />
+                <span>✓ Supreme Package Selected</span>
+              </>
+            ) : (
+              <>
+                <PartyPopper size={15} />
+                <span>Select Supreme Package</span>
+              </>
+            )}
+          </Button>
         </Card>
       </section>
 

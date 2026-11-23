@@ -82,10 +82,6 @@ export const CampsPage: React.FC = () => {
               <CardTitle className="text-title-md leading-snug">{camp.title}</CardTitle>
             </CardHeader>
 
-            <p className="font-body text-body-sm text-muted-foreground">
-              {camp.description}
-            </p>
-
             <div className="flex flex-wrap gap-1.5 py-1">
               {camp.themes.map((t, idx) => (
                 <span key={idx} className="text-[11px] font-semibold bg-surface-low text-foreground px-2 py-0.5 rounded border border-border">
