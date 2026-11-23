@@ -4,6 +4,7 @@ import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRig
 import { Button } from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../components/ui/Select';
 import { SCHEDULES, REVIEWS } from '../data/mockData';
 import type { ScheduleItem } from '../types';
 
@@ -181,20 +182,20 @@ export const HomePage: React.FC = () => {
           })}
         </div>
 
-        {/* Location Selector */}
-        <label className="flex flex-col gap-gutter-xs">
-          <span className="sr-only">Filter by location</span>
-          <select
-            value={selectedLocation}
-            onChange={(e) => setSelectedLocation(e.target.value)}
-            className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-sm text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-          >
-            <option value="all">All Franklin & Nashville Locations</option>
-            <option value="gothic">215 Gothic Ct Suite 102, Franklin</option>
-            <option value="classical">Franklin Classical School</option>
-            <option value="vine">Vine Christian Academy</option>
-          </select>
-        </label>
+        {/* Location Selector (shadcn/ui Select) */}
+        <div className="w-full">
+          <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select location" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Franklin & Nashville Locations</SelectItem>
+              <SelectItem value="gothic">215 Gothic Ct Suite 102, Franklin</SelectItem>
+              <SelectItem value="classical">Franklin Classical School</SelectItem>
+              <SelectItem value="vine">Vine Christian Academy</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
         {/* Schedule Cards List */}
         <div className="flex flex-col gap-gutter-sm">
@@ -342,31 +343,33 @@ export const HomePage: React.FC = () => {
               />
             </label>
 
-            <label className="flex flex-col gap-gutter-xs w-full">
+            <div className="flex flex-col gap-gutter-xs w-full">
               <span className="font-body text-label-sm text-foreground font-semibold">Party Package</span>
-              <select
-                value={inquiryPkg}
-                onChange={(e) => setInquiryPkg(e.target.value)}
-                className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-md text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-              >
-                <option>Premium — $249 (10 guests, 75 mins)</option>
-                <option>Supreme — $349 (12 guests, 90 mins)</option>
-                <option>After-School Partnership Inquiry</option>
-              </select>
-            </label>
+              <Select value={inquiryPkg} onValueChange={setInquiryPkg}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select party package" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Premium — $249 (10 guests, 75 mins)">Premium — $249 (10 guests, 75 mins)</SelectItem>
+                  <SelectItem value="Supreme — $349 (12 guests, 90 mins)">Supreme — $349 (12 guests, 90 mins)</SelectItem>
+                  <SelectItem value="After-School Partnership Inquiry">After-School Partnership Inquiry</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-            <label className="flex flex-col gap-gutter-xs w-full">
+            <div className="flex flex-col gap-gutter-xs w-full">
               <span className="font-body text-label-sm text-foreground font-semibold">Location Preference</span>
-              <select
-                value={inquiryLoc}
-                onChange={(e) => setInquiryLoc(e.target.value)}
-                className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-md text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-              >
-                <option>My Home (Franklin / Nashville area)</option>
-                <option>B4K Venue ($120 for 2 hours)</option>
-                <option>Other Venue / School</option>
-              </select>
-            </label>
+              <Select value={inquiryLoc} onValueChange={setInquiryLoc}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select location preference" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="My Home (Franklin / Nashville area)">My Home (Franklin / Nashville area)</SelectItem>
+                  <SelectItem value="B4K Venue ($120 for 2 hours)">B4K Venue ($120 for 2 hours)</SelectItem>
+                  <SelectItem value="Other Venue / School">Other Venue / School</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             <Button variant="primary" size="lg" type="submit" className="w-full">
               Check Availability & Continue
