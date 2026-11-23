@@ -96,7 +96,7 @@ export const ServicesPage: React.FC = () => {
             </CardContent>
 
             <CardFooter>
-              <span className="font-mono text-mono-md text-primary font-bold tabular-nums">
+              <span className="font-body text-base font-bold text-primary tracking-tight">
                 {prog.priceOrNote}
               </span>
               <div className="flex items-center gap-2">

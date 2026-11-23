@@ -77,7 +77,7 @@ export const CampsPage: React.FC = () => {
                   {camp.track}
                 </Badge>
                 {camp.spotsLeft && (
-                  <span className="font-mono text-label-sm text-muted-foreground tabular-nums font-semibold bg-surface-container px-2.5 py-0.5 rounded-full border border-border">
+                  <span className="font-body text-xs text-slate-500 font-medium bg-surface-container px-2.5 py-0.5 rounded-full border border-border">
                     {camp.spotsLeft}
                   </span>
                 )}
@@ -109,9 +109,14 @@ export const CampsPage: React.FC = () => {
             </div>
 
             <CardFooter>
-              <span className="font-mono text-mono-md text-primary font-bold tabular-nums">
-                {camp.price} • {camp.age}
-              </span>
+              <div className="flex items-baseline gap-1.5 font-body">
+                <span className="text-base font-bold text-primary tracking-tight">
+                  {camp.price}
+                </span>
+                <span className="text-xs text-slate-500 font-medium">
+                  • {camp.age}
+                </span>
+              </div>
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"

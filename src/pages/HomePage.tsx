@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check } from 'lucide-react';
+import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, PartyPopper, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../components/ui/Select';
-import { SCHEDULES, REVIEWS } from '../data/mockData';
+import { SCHEDULES } from '../data/mockData';
 import type { ScheduleItem } from '../types';
 
 export const HomePage: React.FC = () => {
@@ -15,8 +14,9 @@ export const HomePage: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'after-school' | 'camps' | 'homeschool'>('all');
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
-  
+
   // Quick Inquiry state
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [inquiryName, setInquiryName] = useState('');
   const [inquiryEmail, setInquiryEmail] = useState('');
   const [inquiryPkg, setInquiryPkg] = useState('Premium — $249 (10 guests, 75 mins)');
@@ -170,11 +170,10 @@ export const HomePage: React.FC = () => {
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id as any)}
-                className={`shrink-0 inline-flex items-center px-4 py-1.5 rounded-full font-body text-label-sm transition-all ${
-                  isActive
-                    ? 'bg-primary text-primary-foreground font-bold shadow-sm'
-                    : 'bg-card text-muted-foreground border border-border hover:bg-surface-low'
-                }`}
+                className={`shrink-0 inline-flex items-center px-4 py-1.5 rounded-full font-body text-label-sm transition-all ${isActive
+                  ? 'bg-primary text-primary-foreground font-bold shadow-sm'
+                  : 'bg-card text-muted-foreground border border-border hover:bg-surface-low'
+                  }`}
               >
                 <span>{cat.label}</span>
               </button>
@@ -182,20 +181,20 @@ export const HomePage: React.FC = () => {
           })}
         </div>
 
-        {/* Location Selector (shadcn/ui Select) */}
-        <div className="w-full">
-          <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select location" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Franklin & Nashville Locations</SelectItem>
-              <SelectItem value="gothic">215 Gothic Ct Suite 102, Franklin</SelectItem>
-              <SelectItem value="classical">Franklin Classical School</SelectItem>
-              <SelectItem value="vine">Vine Christian Academy</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Location Selector */}
+        <label className="flex flex-col gap-gutter-xs">
+          <span className="sr-only">Filter by location</span>
+          <select
+            value={selectedLocation}
+            onChange={(e) => setSelectedLocation(e.target.value)}
+            className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-sm text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
+          >
+            <option value="all">All Franklin & Nashville Locations</option>
+            <option value="gothic">215 Gothic Ct Suite 102, Franklin</option>
+            <option value="classical">Franklin Classical School</option>
+            <option value="vine">Vine Christian Academy</option>
+          </select>
+        </label>
 
         {/* Schedule Cards List */}
         <div className="flex flex-col gap-gutter-sm">
@@ -206,8 +205,8 @@ export const HomePage: React.FC = () => {
                   <Badge variant={sch.category === 'after-school' ? 'primary' : sch.category === 'camps' ? 'secondary' : 'default'}>
                     {sch.categoryLabel}
                   </Badge>
-                  <span className="font-mono text-label-sm text-muted-foreground tabular-nums font-semibold">
-                    {sch.sessions} • {sch.spotsLeft} spots left
+                  <span className="font-body text-xs font-medium text-slate-500">
+                    {sch.sessions} • <span className="font-semibold text-slate-700">{sch.spotsLeft} spots left</span>
                   </span>
                 </div>
                 <CardTitle className="leading-snug">{sch.title}</CardTitle>
@@ -224,9 +223,14 @@ export const HomePage: React.FC = () => {
               </div>
 
               <CardFooter>
-                <span className="font-mono text-mono-md text-primary font-bold tabular-nums">
-                  {sch.price} • {sch.age}
-                </span>
+                <div className="flex items-baseline gap-1.5 font-body">
+                  <span className="text-base font-bold text-primary tracking-tight">
+                    {sch.price}
+                  </span>
+                  <span className="text-xs text-slate-500 font-medium">
+                    • {sch.age}
+                  </span>
+                </div>
                 <Button
                   variant="primary"
                   size="sm"
@@ -252,73 +256,75 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* What Kids Say About Us */}
-      <section aria-labelledby="reviews-heading" className="flex flex-col gap-gutter-sm">
-        <div className="flex items-center justify-between">
-          <h2 id="reviews-heading" className="font-headline text-headline-md text-foreground font-bold">
-            What Kids Say About Us
-          </h2>
-          <Link to="/about" className="font-headline text-label-sm text-primary hover:underline">
-            Read stories
-          </Link>
-        </div>
-        <div className="flex gap-gutter-sm overflow-x-auto pb-2 -mx-page-margin px-page-margin">
-          {REVIEWS.slice(0, 4).map((rev) => (
-            <Card
-              key={rev.id}
-              variant="elevated"
-              className="min-w-[260px] max-w-[280px] shrink-0 flex flex-col gap-gutter-sm"
-            >
-              <div className="flex items-center justify-between gap-gutter-sm">
-                <h3 className="font-headline text-title-md text-foreground font-bold">{rev.author}</h3>
-                <span className="font-body text-body-sm font-semibold text-secondary">{rev.role}</span>
-              </div>
-              <p className="font-body text-body-md text-muted-foreground italic leading-relaxed">
-                {rev.quote}
-              </p>
-              <div className="flex items-center gap-1 text-accent-foreground pt-1 border-t border-border mt-auto">
-                {Array.from({ length: rev.stars }).map((_, i) => (
-                  <Star key={i} size={14} fill="currentColor" />
-                ))}
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Party & Program Inquiry Form */}
+      {/* Book a Party or Ask Us - Interactive Card */}
       <section
         id="party-inquiry"
         aria-labelledby="inquiry-heading"
-        className="rounded-2xl bg-card border border-border p-gutter-md flex flex-col gap-gutter-md shadow-sm"
+        className="rounded-2xl bg-card border border-border p-gutter-md flex flex-col gap-gutter-md shadow-sm transition-all"
       >
-        <div className="flex flex-col gap-gutter-xs">
-          <h2 id="inquiry-heading" className="font-headline text-headline-md text-foreground font-bold">
-            Book a Party or Ask Us
-          </h2>
-          <p className="font-body text-body-sm text-muted-foreground">
-            Check birthday party availability, school partnerships, or reserve with instant Stripe checkout.
-          </p>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center shrink-0 mt-0.5">
+              <PartyPopper size={20} />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <h2 id="inquiry-heading" className="font-headline text-headline-md text-foreground font-bold">
+                Book a Party or Ask Us
+              </h2>
+              <p className="font-body text-body-sm text-muted-foreground">
+                Check birthday party availability, school partnerships, or reserve with instant Stripe checkout.
+              </p>
+            </div>
+          </div>
+          {isFormOpen && (
+            <button
+              type="button"
+              onClick={() => setIsFormOpen(false)}
+              className="p-1 rounded-lg text-muted-foreground hover:bg-surface-low hover:text-foreground transition-colors shrink-0"
+              aria-label="Collapse form"
+            >
+              <ChevronUp size={20} />
+            </button>
+          )}
         </div>
 
-        {inquirySubmitted ? (
+        {!isFormOpen ? (
+          <Button
+            variant="primary"
+            size="md"
+            onClick={() => setIsFormOpen(true)}
+            className="w-full gap-2 shadow-sm font-bold mt-1"
+          >
+            <Sparkles size={16} />
+            <span>Book a Party or Ask Us</span>
+            <ChevronDown size={16} />
+          </Button>
+        ) : inquirySubmitted ? (
           <div className="p-4 rounded-xl bg-secondary/10 border border-secondary/30 text-secondary flex flex-col items-center gap-2 text-center animate-in fade-in">
             <Check size={28} className="text-secondary" />
             <h4 className="font-headline text-title-md font-bold">Inquiry Received!</h4>
             <p className="font-body text-body-sm text-foreground">
               BrickBot Franklin has sent availability details and a direct Stripe reservation link to <strong>{inquiryEmail}</strong>.
             </p>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="mt-2"
-              onClick={() => setInquirySubmitted(false)}
-            >
-              Send Another Request
-            </Button>
+            <div className="flex gap-2 mt-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setInquirySubmitted(false)}
+              >
+                Send Another Request
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsFormOpen(false)}
+              >
+                Close
+              </Button>
+            </div>
           </div>
         ) : (
-          <form onSubmit={handleInquirySubmit} className="flex flex-col gap-gutter-md">
+          <form onSubmit={handleInquirySubmit} className="flex flex-col gap-gutter-md animate-in fade-in duration-200">
             <label className="flex flex-col gap-gutter-xs w-full">
               <span className="font-body text-label-sm text-foreground font-semibold">Parent / Host Name *</span>
               <input
@@ -343,37 +349,45 @@ export const HomePage: React.FC = () => {
               />
             </label>
 
-            <div className="flex flex-col gap-gutter-xs w-full">
+            <label className="flex flex-col gap-gutter-xs w-full">
               <span className="font-body text-label-sm text-foreground font-semibold">Party Package</span>
-              <Select value={inquiryPkg} onValueChange={setInquiryPkg}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select party package" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Premium — $249 (10 guests, 75 mins)">Premium — $249 (10 guests, 75 mins)</SelectItem>
-                  <SelectItem value="Supreme — $349 (12 guests, 90 mins)">Supreme — $349 (12 guests, 90 mins)</SelectItem>
-                  <SelectItem value="After-School Partnership Inquiry">After-School Partnership Inquiry</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              <select
+                value={inquiryPkg}
+                onChange={(e) => setInquiryPkg(e.target.value)}
+                className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-md text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
+              >
+                <option>Premium — $249 (10 guests, 75 mins)</option>
+                <option>Supreme — $349 (12 guests, 90 mins)</option>
+                <option>After-School Partnership Inquiry</option>
+              </select>
+            </label>
 
-            <div className="flex flex-col gap-gutter-xs w-full">
+            <label className="flex flex-col gap-gutter-xs w-full">
               <span className="font-body text-label-sm text-foreground font-semibold">Location Preference</span>
-              <Select value={inquiryLoc} onValueChange={setInquiryLoc}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select location preference" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="My Home (Franklin / Nashville area)">My Home (Franklin / Nashville area)</SelectItem>
-                  <SelectItem value="B4K Venue ($120 for 2 hours)">B4K Venue ($120 for 2 hours)</SelectItem>
-                  <SelectItem value="Other Venue / School">Other Venue / School</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              <select
+                value={inquiryLoc}
+                onChange={(e) => setInquiryLoc(e.target.value)}
+                className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-md text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
+              >
+                <option>My Home (Franklin / Nashville area)</option>
+                <option>B4K Venue ($120 for 2 hours)</option>
+                <option>Other Venue / School</option>
+              </select>
+            </label>
 
-            <Button variant="primary" size="lg" type="submit" className="w-full">
-              Check Availability & Continue
-            </Button>
+            <div className="flex items-center gap-2 pt-1">
+              <Button variant="primary" size="lg" type="submit" className="flex-1">
+                Check Availability & Continue
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                type="button"
+                onClick={() => setIsFormOpen(false)}
+              >
+                Cancel
+              </Button>
+            </div>
           </form>
         )}
       </section>
