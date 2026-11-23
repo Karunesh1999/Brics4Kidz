@@ -39,7 +39,6 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
 
   // 3. Scale state (defaults immediately to auto-fit)
   const [scale, setScale] = useState<number>(calculateFitScale);
-  const [userZoomOverride, setUserZoomOverride] = useState<number | null>(null);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -52,9 +51,7 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
       const desktop = mql.matches;
       setIsDesktop(desktop);
       if (!isInsideIframe && desktop) {
-        if (userZoomOverride === null) {
-          setScale(calculateFitScale());
-        }
+        setScale(calculateFitScale());
       }
     };
 
@@ -75,7 +72,7 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
         window.visualViewport.removeEventListener('resize', handleResize);
       }
     };
-  }, [isInsideIframe, userZoomOverride, calculateFitScale]);
+  }, [isInsideIframe, calculateFitScale]);
 
   // Bi-directional history synchronization: Desktop browser Back/Forward controls
   useEffect(() => {
@@ -106,8 +103,6 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
     ? (window.location.pathname + window.location.search + window.location.hash) || '/'
     : '/';
 
-  const currentScale = userZoomOverride ?? scale;
-
   return (
     <div className="fixed inset-0 w-screen h-screen bg-slate-950 flex items-center justify-center p-3 select-none overflow-hidden z-50">
       
@@ -117,7 +112,7 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
         style={{
           width: `${BASE_WIDTH}px`,
           height: `${BASE_HEIGHT}px`,
-          transform: `scale(${currentScale})`,
+          transform: `scale(${scale})`,
           transformOrigin: 'center center',
         }}
       >
@@ -137,41 +132,6 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
           />
         </div>
       </div>
-
-      {/* Floating Desktop Zoom Helper Controls */}
-      <aside aria-label="Desktop Preview Controls" className="fixed bottom-4 right-4 z-[60] bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-xl text-slate-300 text-xs font-mono">
-        <span className="text-slate-400 font-medium">Fit: {Math.round(currentScale * 100)}%</span>
-        <button
-          onClick={() => {
-            setUserZoomOverride(null);
-            setScale(calculateFitScale());
-          }}
-          className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
-            userZoomOverride === null ? 'bg-primary text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
-          }`}
-          title="Auto-Fit to Screen Height"
-        >
-          Auto Fit
-        </button>
-        <button
-          onClick={() => setUserZoomOverride(0.8)}
-          className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
-            userZoomOverride === 0.8 ? 'bg-primary text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
-          }`}
-          title="80% Scale"
-        >
-          80%
-        </button>
-        <button
-          onClick={() => setUserZoomOverride(1)}
-          className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
-            userZoomOverride === 1 ? 'bg-primary text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
-          }`}
-          title="100% Original Size"
-        >
-          100%
-        </button>
-      </aside>
 
     </div>
   );
