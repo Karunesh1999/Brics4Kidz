@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 interface DesktopDeviceFrameProps {
   children: React.ReactNode;
@@ -20,47 +20,62 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
     return window.matchMedia('(min-width: 768px)').matches;
   });
 
-  // 3. Dynamic auto-scaling to fit 100% inside any desktop screen height
-  const [scale, setScale] = useState<number>(() => {
+  // Calculate dynamic auto-scale to ensure 100% of the phone frame fits on any screen
+  const calculateFitScale = useCallback(() => {
     if (typeof window === 'undefined') return 1;
-    const availableHeight = window.innerHeight - 36;
-    const availableWidth = window.innerWidth - 36;
-    return Math.min(1, Math.max(0.3, availableHeight / BASE_HEIGHT, availableWidth / BASE_WIDTH));
-  });
+    // Leave 48px vertical safety margin (24px top, 24px bottom) so bottom bezel never cuts off
+    const marginY = 48;
+    const marginX = 48;
+    const availableH = window.innerHeight - marginY;
+    const availableW = window.innerWidth - marginX;
+
+    const scaleH = availableH / BASE_HEIGHT;
+    const scaleW = availableW / BASE_WIDTH;
+
+    // Must fit both dimensions, never exceed 1 (100% native size), minimum 0.35
+    const fitScale = Math.min(1, scaleH, scaleW);
+    return Math.max(0.35, fitScale);
+  }, []);
+
+  // 3. Scale state (defaults immediately to auto-fit)
+  const [scale, setScale] = useState<number>(calculateFitScale);
+  const [userZoomOverride, setUserZoomOverride] = useState<number | null>(null);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // Monitor desktop screen resize and auto-scale to fit 100% of viewport
+  // Monitor window resize and visualViewport zoom changes
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const mql = window.matchMedia('(min-width: 768px)');
     
     const handleResize = () => {
-      setIsDesktop(mql.matches);
-      if (!isInsideIframe && mql.matches) {
-        const availableHeight = window.innerHeight - 36;
-        const availableWidth = window.innerWidth - 36;
-        const scaleH = availableHeight / BASE_HEIGHT;
-        const scaleW = availableWidth / BASE_WIDTH;
-        const newScale = Math.min(1, scaleH, scaleW);
-        setScale(Math.max(0.3, newScale));
+      const desktop = mql.matches;
+      setIsDesktop(desktop);
+      if (!isInsideIframe && desktop) {
+        if (userZoomOverride === null) {
+          setScale(calculateFitScale());
+        }
       }
     };
 
+    // Run immediately on mount
     handleResize();
+
     window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
     mql.addEventListener('change', handleResize);
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', handleResize);
     }
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
       mql.removeEventListener('change', handleResize);
       if (window.visualViewport) {
         window.visualViewport.removeEventListener('resize', handleResize);
       }
     };
-  }, [isInsideIframe]);
+  }, [isInsideIframe, userZoomOverride, calculateFitScale]);
 
   // Bi-directional history synchronization: Desktop browser Back/Forward controls
   useEffect(() => {
@@ -91,49 +106,72 @@ export const DesktopDeviceFrame: React.FC<DesktopDeviceFrameProps> = ({ children
     ? (window.location.pathname + window.location.search + window.location.hash) || '/'
     : '/';
 
-  const scaledW = Math.round(BASE_WIDTH * scale);
-  const scaledH = Math.round(BASE_HEIGHT * scale);
+  const currentScale = userZoomOverride ?? scale;
 
   return (
     <div className="fixed inset-0 w-screen h-screen bg-slate-950 flex items-center justify-center p-3 select-none overflow-hidden z-50">
       
-      {/* Dimensionally locked bounding wrapper matching exact scaled size so flexbox centers it perfectly */}
-      <div
-        className="relative shrink-0 flex items-center justify-center"
+      {/* Outer Titanium Phone Shell with dynamic auto-fit scaling around center */}
+      <div 
+        className="relative rounded-[54px] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.1)] ring-1 ring-slate-900/80 transition-transform duration-150 shrink-0"
         style={{
-          width: `${scaledW}px`,
-          height: `${scaledH}px`,
+          width: `${BASE_WIDTH}px`,
+          height: `${BASE_HEIGHT}px`,
+          transform: `scale(${currentScale})`,
+          transformOrigin: 'center center',
         }}
       >
-        {/* Outer Titanium Phone Shell with dynamic auto-fit scaling */}
-        <div 
-          className="relative rounded-[54px] bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 p-3 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.1)] ring-1 ring-slate-900/80 transition-transform duration-75 shrink-0"
-          style={{
-            width: `${BASE_WIDTH}px`,
-            height: `${BASE_HEIGHT}px`,
-            transform: `scale(${scale})`,
-            transformOrigin: 'top left',
-          }}
-        >
-          {/* Inner Phone Screen Container (Exact Standard iPhone Viewport: 393px × 852px) */}
-          <div
-            className="relative rounded-[42px] overflow-hidden bg-background shadow-inner flex flex-col w-full h-full"
-          >
-            {/* The Isolated Viewport Iframe */}
-            <iframe
-              ref={iframeRef}
-              src={initialPath}
-              title="Bricks 4 Kidz Mobile App Preview"
-              className="w-full h-full border-0 select-auto bg-background no-scrollbar"
-              style={{
-                colorScheme: 'light',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-              }}
-            />
-          </div>
+        {/* Inner Phone Screen Container (Exact Standard iPhone Viewport: 393px × 852px) */}
+        <div className="relative rounded-[42px] overflow-hidden bg-background shadow-inner flex flex-col w-full h-full">
+          {/* The Isolated Viewport Iframe */}
+          <iframe
+            ref={iframeRef}
+            src={initialPath}
+            title="Bricks 4 Kidz Mobile App Preview"
+            className="w-full h-full border-0 select-auto bg-background no-scrollbar"
+            style={{
+              colorScheme: 'light',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          />
         </div>
       </div>
+
+      {/* Floating Desktop Zoom Helper Controls */}
+      <aside aria-label="Desktop Preview Controls" className="fixed bottom-4 right-4 z-[60] bg-slate-900/90 backdrop-blur-md border border-slate-700/60 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-xl text-slate-300 text-xs font-mono">
+        <span className="text-slate-400 font-medium">Fit: {Math.round(currentScale * 100)}%</span>
+        <button
+          onClick={() => {
+            setUserZoomOverride(null);
+            setScale(calculateFitScale());
+          }}
+          className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+            userZoomOverride === null ? 'bg-primary text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
+          }`}
+          title="Auto-Fit to Screen Height"
+        >
+          Auto Fit
+        </button>
+        <button
+          onClick={() => setUserZoomOverride(0.8)}
+          className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+            userZoomOverride === 0.8 ? 'bg-primary text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
+          }`}
+          title="80% Scale"
+        >
+          80%
+        </button>
+        <button
+          onClick={() => setUserZoomOverride(1)}
+          className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+            userZoomOverride === 1 ? 'bg-primary text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
+          }`}
+          title="100% Original Size"
+        >
+          100%
+        </button>
+      </aside>
 
     </div>
   );
