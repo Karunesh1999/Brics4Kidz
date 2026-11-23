@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useOutletContext, useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check } from 'lucide-react';
+import { ArrowRight, Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
@@ -38,32 +38,64 @@ export const HomePage: React.FC = () => {
   return (
     <div className="flex flex-col gap-gutter-lg pt-gutter-md pb-6">
       
-      {/* Coming Up: Winter Camps Banner */}
+      {/* Coming Up: Winter Camps Featured Spotlight Card (80% Visual, 20% Action) */}
       <section
         aria-label="Winter Camps Promotion"
-        className="rounded-2xl bg-secondary text-secondary-foreground p-gutter-md grid grid-cols-[1fr_96px] items-center gap-gutter-md shadow-sm border border-secondary/20"
+        onClick={() => navigate('/camps')}
+        className="group relative rounded-3xl overflow-hidden bg-gradient-to-b from-[#008744] via-[#007038] to-[#005228] border border-emerald-400/30 shadow-lg shadow-emerald-950/15 cursor-pointer transition-all duration-300 hover:shadow-xl active:scale-[0.99] flex flex-col"
       >
-        <div className="flex flex-col items-start gap-gutter-sm">
-          <Badge variant="accent">COMING UP</Badge>
-          <h2 className="font-headline text-headline-md text-secondary-foreground font-bold leading-tight">
-            Winter Camps
-          </h2>
-          <Button
-            variant="accent"
-            size="sm"
-            onClick={() => navigate('/camps')}
-            className="gap-1.5 shadow-sm"
+        {/* 80% High-Impact Visual Section */}
+        <div className="relative w-full pt-4 pb-2 px-4 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
+          {/* Subtle LEGO stud pattern texture in background */}
+          <div 
+            className="absolute inset-0 opacity-10 pointer-events-none"
+            style={{
+              backgroundImage: 'radial-gradient(circle, #ffffff 18%, transparent 20%)',
+              backgroundSize: '16px 16px'
+            }}
+          />
+
+          {/* Floating Pill Badge */}
+          <div className="w-full flex items-center justify-between z-10 mb-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FFD100] text-slate-900 shadow-sm uppercase tracking-wider">
+              <Sparkles size={13} className="text-amber-800" />
+              <span>Coming Up</span>
+            </span>
+            <span className="text-[11px] font-semibold text-emerald-100/90 bg-emerald-900/50 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-emerald-400/20">
+              Ages 5–12
+            </span>
+          </div>
+
+          {/* Prominent High-Resolution Camp Artwork (Takes ~80% presence) */}
+          <div className="relative z-10 w-full flex items-center justify-center py-1">
+            <img
+              src="/images/client/camps-visual.png"
+              onError={(e) => { e.currentTarget.src = '/images/camps.jpg'; }}
+              alt="Bricks 4 Kidz Winter Camps Characters"
+              className="max-h-48 w-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)] transform group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+        </div>
+
+        {/* 20% Sleek Action & Title Strip */}
+        <div className="relative z-10 bg-white/95 backdrop-blur-md px-4 py-3 border-t border-emerald-100 flex items-center justify-between gap-3">
+          <div className="flex flex-col">
+            <h2 className="font-headline text-lg font-bold text-slate-900 leading-tight group-hover:text-primary transition-colors">
+              Winter & Spring Camps
+            </h2>
+            <p className="font-body text-xs text-slate-600 font-medium">
+              Half-Day & Full-Day LEGO® STEAM
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#FFD100] text-slate-900 shadow-sm group-hover:bg-[#ffc400] group-hover:shadow transition-all"
           >
             <span>Peek Inside</span>
-            <ArrowRight size={16} />
-          </Button>
+            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+          </button>
         </div>
-        <img
-          src="/images/client/camps-visual.png"
-          onError={(e) => { e.currentTarget.src = '/images/camps.jpg'; }}
-          alt="Bricks 4 Kidz Winter Camps"
-          className="w-24 h-24 object-contain rounded-xl bg-white/20 p-1 border-2 border-primary-foreground shadow-sm"
-        />
       </section>
 
       {/* Hero Section */}
