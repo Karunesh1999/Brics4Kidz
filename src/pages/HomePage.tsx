@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, PartyPopper, ChevronDown, ChevronUp } from 'lucide-react';
+import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, PartyPopper, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
@@ -374,15 +374,22 @@ export const HomePage: React.FC = () => {
               </Select>
             </div>
 
-            <div className="flex items-center gap-2 pt-1">
-              <Button variant="primary" size="lg" type="submit" className="flex-1">
-                Check Availability & Continue
+            <div className="flex items-center gap-2 pt-2">
+              <Button
+                variant="primary"
+                size="md"
+                type="submit"
+                className="flex-1 h-11 rounded-xl !text-white font-bold gap-2 shadow-sm text-xs sm:text-sm"
+              >
+                <span>Check Availability & Continue</span>
+                <ArrowRight size={15} className="text-white shrink-0" />
               </Button>
               <Button
                 variant="outline"
-                size="lg"
+                size="md"
                 type="button"
                 onClick={() => setIsFormOpen(false)}
+                className="h-11 px-4 rounded-xl text-xs sm:text-sm font-semibold hover:bg-slate-50 text-slate-600"
               >
                 Cancel
               </Button>
