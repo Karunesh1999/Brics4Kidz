@@ -60,9 +60,6 @@ export const ServiceDetailPage: React.FC = () => {
           <h1 className="font-headline text-title-lg text-foreground font-bold leading-tight">
             {program.title}
           </h1>
-          <p className="font-body text-body-sm text-muted-foreground leading-relaxed">
-            {program.subtitle}
-          </p>
 
           <div className="pt-2">
             <Button
@@ -120,7 +117,6 @@ export const ServiceDetailPage: React.FC = () => {
                 <span className="font-body text-label-sm text-muted-foreground">Motorized Build</span>
               </div>
               <h3 className="font-headline text-title-md text-foreground font-bold">{c.title}</h3>
-              <p className="font-body text-body-sm text-muted-foreground">{c.description}</p>
             </Card>
           ))}
         </div>

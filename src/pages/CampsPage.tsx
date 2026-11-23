@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { CAMPS } from '../data/mockData';
-import { Card, CardHeader, CardTitle } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { MapPin, Clock } from 'lucide-react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
@@ -40,8 +38,8 @@ export const CampsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Camp Season Tabs */}
-      <div className="flex items-center gap-gutter-sm overflow-x-auto pb-1" role="group" aria-label="Filter by camp season">
+      {/* Camp Season Tabs (Responsive Zero-Cutoff Control) */}
+      <div className="grid grid-cols-3 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 gap-1">
         {[
           { id: 'winter', label: 'Winter Camps' },
           { id: 'thanksgiving', label: 'Thanksgiving' },
@@ -51,11 +49,12 @@ export const CampsPage: React.FC = () => {
           return (
             <button
               key={tab.id}
+              type="button"
               onClick={() => setSelectedSeason(tab.id as any)}
-              className={`shrink-0 inline-flex items-center px-4 py-1.5 rounded-full font-body text-label-sm transition-all ${
+              className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex items-center justify-center cursor-pointer ${
                 isActive
-                  ? 'bg-primary text-primary-foreground font-bold shadow-sm'
-                  : 'bg-card text-muted-foreground border border-border hover:bg-surface-low'
+                  ? 'bg-white text-secondary shadow-xs border border-secondary/20'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <span>{tab.label}</span>
@@ -64,67 +63,75 @@ export const CampsPage: React.FC = () => {
         })}
       </div>
 
-      {/* Camp Cards */}
-      <section id="camp-list" aria-label="Available Camp Sessions" className="flex flex-col gap-gutter-sm">
+      {/* Camp Cards (Minimalist & Fully Responsive Layout) */}
+      <section id="camp-list" aria-label="Available Camp Sessions" className="flex flex-col gap-2.5">
         {filteredCamps.map((camp: CampItem) => (
-          <Card key={camp.id} className="flex flex-col gap-gutter-sm shadow-sm hover:border-primary transition-colors">
-            <CardHeader>
-              <div className="flex items-center justify-between gap-gutter-sm">
-                <Badge variant="secondary">
-                  {camp.track}
-                </Badge>
-                {camp.spotsLeft && (
-                  <span className="font-body text-xs text-slate-500 font-medium bg-surface-container px-2.5 py-0.5 rounded-full border border-border">
-                    {camp.spotsLeft}
-                  </span>
-                )}
-              </div>
-              <CardTitle className="text-title-md leading-snug">{camp.title}</CardTitle>
-            </CardHeader>
+          <div
+            key={camp.id}
+            className="rounded-2xl border border-slate-200/80 bg-white p-3.5 shadow-xs hover:border-secondary/40 hover:shadow-sm transition-all flex flex-col gap-2"
+          >
+            {/* Row 1: Track Badge & Availability */}
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
+                {camp.track}
+              </span>
+              {camp.spotsLeft && (
+                <span className="text-[10px] font-semibold text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded">
+                  {camp.spotsLeft}
+                </span>
+              )}
+            </div>
 
-            <div className="flex flex-wrap gap-1.5 py-1">
+            {/* Row 2: Title */}
+            <h3 className="font-headline text-sm font-bold text-slate-900 leading-snug">
+              {camp.title}
+            </h3>
+
+            {/* Row 3: Theme chips */}
+            <div className="flex flex-wrap gap-1">
               {camp.themes.map((t, idx) => (
-                <span key={idx} className="text-[11px] font-semibold bg-surface-low text-foreground px-2 py-0.5 rounded border border-border">
+                <span
+                  key={idx}
+                  className="text-[10px] font-medium bg-slate-50 text-slate-600 px-2 py-0.5 rounded-md border border-slate-200/60"
+                >
                   {t}
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-col gap-1 text-muted-foreground font-body text-body-sm pt-1 border-t border-border">
-              <div className="flex items-center gap-1.5">
-                <Clock size={15} className="text-primary shrink-0" />
-                <span className="tabular-nums">{camp.time}</span>
+            {/* Row 4: Meta details (Time & Location) */}
+            <div className="flex flex-col gap-1 text-[11px] text-slate-500">
+              <div className="flex items-center gap-1.5 text-slate-400">
+                <Clock size={13} className="shrink-0" />
+                <span className="truncate">{camp.time}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <MapPin size={15} className="text-destructive shrink-0" />
-                <span>{camp.location}</span>
+                <MapPin size={13} className="text-destructive shrink-0" />
+                <span className="truncate">{camp.location}</span>
               </div>
             </div>
 
-            <div className="pt-2.5 border-t border-slate-100 flex flex-col gap-2.5 font-body">
-              {/* Clean Price & Age Row (No Wrapping) */}
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-lg font-bold text-primary tracking-tight whitespace-nowrap">
+            {/* Row 5: Price, Age & Actions (Fully Responsive 2-tier layout) */}
+            <div className="flex flex-col gap-2 pt-2 border-t border-slate-100 mt-0.5">
+              <div className="flex items-baseline gap-1.5 font-body">
+                <span className="font-headline text-base font-extrabold text-slate-900 tracking-tight">
                   {camp.price}
                 </span>
-                <span className="text-xs text-slate-500 font-medium whitespace-nowrap">
+                <span className="text-[11px] text-slate-400 font-medium">
                   • Ages {camp.age}
                 </span>
               </div>
 
-              {/* Full-Width Touch-Friendly Action Buttons */}
               <div className="grid grid-cols-2 gap-2 w-full">
-                <Button
-                  variant="outline"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={() => navigate('/booking')}
-                  className="w-full h-9 text-xs font-semibold rounded-xl hover:bg-slate-50"
+                  className="h-8.5 px-3 rounded-xl border border-slate-200 bg-card hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all active:scale-[0.98] cursor-pointer flex items-center justify-center"
                 >
                   Configure
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
+                </button>
+                <button
+                  type="button"
                   onClick={() =>
                     onOpenStripe({
                       title: camp.title,
@@ -132,13 +139,13 @@ export const CampsPage: React.FC = () => {
                       subtitle: `${camp.track} • ${camp.location}`,
                     })
                   }
-                  className="w-full h-9 text-xs font-bold rounded-xl shadow-xs whitespace-nowrap"
+                  className="h-8.5 px-3.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all shadow-xs active:scale-[0.98] cursor-pointer flex items-center justify-center whitespace-nowrap"
                 >
                   Stripe Pay
-                </Button>
+                </button>
               </div>
             </div>
-          </Card>
+          </div>
         ))}
       </section>
 

@@ -103,10 +103,7 @@ export const HomePage: React.FC = () => {
                 <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                   <School size={22} />
                 </div>
-                <div className="flex flex-col">
-                  <h3 className="font-headline text-title-md text-foreground font-bold">School Programs</h3>
-                  <p className="font-body text-body-sm text-muted-foreground">After-school enrichment, robotics & pre-school</p>
-                </div>
+                <h3 className="font-headline text-title-md text-foreground font-bold">School Programs</h3>
               </div>
               <ChevronRight size={18} className="text-primary shrink-0" />
             </Card>
@@ -119,10 +116,7 @@ export const HomePage: React.FC = () => {
                 <div className="w-11 h-11 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center shrink-0">
                   <Trees size={22} />
                 </div>
-                <div className="flex flex-col">
-                  <h3 className="font-headline text-title-md text-foreground font-bold">Holiday & Summer Camps</h3>
-                  <p className="font-body text-body-sm text-muted-foreground">Thanksgiving, Winter & Summer LEGO® Camps</p>
-                </div>
+                <h3 className="font-headline text-title-md text-foreground font-bold">Holiday & Summer Camps</h3>
               </div>
               <ChevronRight size={18} className="text-primary shrink-0" />
             </Card>
@@ -135,10 +129,7 @@ export const HomePage: React.FC = () => {
                 <div className="w-11 h-11 rounded-xl bg-destructive/10 text-destructive flex items-center justify-center shrink-0">
                   <Cake size={22} />
                 </div>
-                <div className="flex flex-col">
-                  <h3 className="font-headline text-title-md text-foreground font-bold">Birthday Parties</h3>
-                  <p className="font-body text-body-sm text-muted-foreground">Premium ($249) & Supreme ($349) packages</p>
-                </div>
+                <h3 className="font-headline text-title-md text-foreground font-bold">Birthday Parties</h3>
               </div>
               <ChevronRight size={18} className="text-primary shrink-0" />
             </Card>

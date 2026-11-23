@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { School, Bot, Blocks, Trees, Users, ArrowRight } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../components/ui/Card';
+import { School, Bot, Blocks, Trees, Users, ArrowRight, ChevronRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { PROGRAMS } from '../data/mockData';
@@ -73,49 +72,97 @@ export const ServicesPage: React.FC = () => {
         })}
       </div>
 
-      {/* Program Directory */}
-      <section aria-label="Program List" className="flex flex-col gap-gutter-sm">
+      {/* Program Directory (Attractive & Balanced Redesign) */}
+      <section aria-label="Program List" className="flex flex-col gap-3">
         {filteredPrograms.map((prog: ProgramItem) => (
-          <Card key={prog.id} className="flex flex-col gap-gutter-sm shadow-sm hover:border-primary transition-colors">
-            <CardHeader className="flex flex-row items-start justify-between gap-gutter-sm">
-              <div className="flex flex-col gap-gutter-xs">
-                <Badge variant={prog.ageGroup === 'elementary' ? 'primary' : prog.ageGroup === 'prek' ? 'destructive' : 'secondary'} className="self-start">
-                  {prog.ageLabel}
-                </Badge>
-                <CardTitle className="text-title-md">{prog.title}</CardTitle>
-              </div>
-              <div className="p-2 rounded-xl bg-surface-low border border-border">
-                {getIcon(prog.iconName)}
-              </div>
-            </CardHeader>
+          <div
+            key={prog.id}
+            className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs hover:border-primary/50 hover:shadow-sm transition-all flex flex-col gap-3 group"
+          >
+            {/* Top Row: Icon + Age Badge & Program Title */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3">
+                <div
+                  className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${
+                    prog.ageGroup === 'elementary'
+                      ? 'bg-primary/10 border-primary/20 text-primary'
+                      : prog.ageGroup === 'prek'
+                      ? 'bg-destructive/10 border-destructive/20 text-destructive'
+                      : 'bg-secondary/10 border-secondary/20 text-secondary'
+                  }`}
+                >
+                  {getIcon(prog.iconName)}
+                </div>
 
-            <CardContent>
-              <p className="font-body text-body-md text-muted-foreground">
-                {prog.description}
-              </p>
-            </CardContent>
+                <div className="flex flex-col gap-0.5">
+                  <span
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-md inline-block self-start ${
+                      prog.ageGroup === 'elementary'
+                        ? 'bg-blue-50 text-blue-700 border border-blue-100'
+                        : prog.ageGroup === 'prek'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-100'
+                        : 'bg-emerald-50 text-emerald-800 border border-emerald-100'
+                    }`}
+                  >
+                    {prog.ageLabel}
+                  </span>
+                  <Link to={`/services/${prog.slug}`}>
+                    <h3 className="font-headline text-base font-bold text-slate-900 leading-snug group-hover:text-primary transition-colors">
+                      {prog.title}
+                    </h3>
+                  </Link>
+                </div>
+              </div>
 
-            <CardFooter>
-              <span className="font-body text-base font-bold text-primary tracking-tight">
-                {prog.priceOrNote}
-              </span>
-              <div className="flex items-center gap-2">
+              <Link
+                to={`/services/${prog.slug}`}
+                className="text-slate-400 group-hover:text-primary transition-colors p-1"
+                aria-label={`View details for ${prog.title}`}
+              >
+                <ChevronRight size={18} />
+              </Link>
+            </div>
+
+            {/* Feature Highlights (Clean Micro-bullets) */}
+            {prog.features && prog.features.length > 0 && (
+              <div className="flex flex-col gap-1.5 py-1 px-1">
+                {prog.features.slice(0, 2).map((feat, fIdx) => (
+                  <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-600">
+                    <div className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
+                    <span className="truncate">{feat}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Bottom Row: Tuition Price & Clean Actions */}
+            <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 mt-0.5">
+              <div className="flex flex-col">
+                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                  Tuition
+                </span>
+                <span className="font-headline text-sm font-extrabold text-primary tracking-tight whitespace-nowrap">
+                  {prog.priceOrNote}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
                 <Link
                   to={`/services/${prog.slug}`}
-                  className="font-headline text-label-sm text-primary hover:underline font-bold px-2 py-1"
+                  className="h-8.5 px-3 rounded-xl border border-slate-200 bg-card hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all active:scale-[0.98] flex items-center justify-center whitespace-nowrap"
                 >
                   Learn More
                 </Link>
-                <Button
-                  variant="primary"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={() => navigate('/booking')}
+                  className="h-8.5 px-4 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all shadow-xs active:scale-[0.98] cursor-pointer flex items-center justify-center whitespace-nowrap"
                 >
                   Enroll
-                </Button>
+                </button>
               </div>
-            </CardFooter>
-          </Card>
+            </div>
+          </div>
         ))}
       </section>
 
@@ -124,9 +171,6 @@ export const ServicesPage: React.FC = () => {
         <h2 className="font-headline text-headline-md text-secondary-foreground font-bold">
           Bring Bricks 4 Kidz to Your School
         </h2>
-        <p className="font-body text-body-sm text-secondary-foreground/90 leading-relaxed">
-          Administrators & PTOs: request a turnkey after-school enrichment proposal or STEM assembly for your Franklin/Nashville campus.
-        </p>
         <Button
           variant="accent"
           size="md"
