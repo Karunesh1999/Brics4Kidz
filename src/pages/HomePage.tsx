@@ -38,59 +38,50 @@ export const HomePage: React.FC = () => {
   return (
     <div className="flex flex-col gap-gutter-lg pt-gutter-md pb-6">
       
-      {/* Coming Up: Winter Camps Featured Spotlight Card (80% Visual, 20% Action) */}
+      {/* Coming Up: Winter Camps Spotlight Card (Clean, modern 80% visual / 20% action) */}
       <section
         aria-label="Winter Camps Promotion"
         onClick={() => navigate('/camps')}
-        className="group relative rounded-3xl overflow-hidden bg-gradient-to-b from-[#008744] via-[#007038] to-[#005228] border border-emerald-400/30 shadow-lg shadow-emerald-950/15 cursor-pointer transition-all duration-300 hover:shadow-xl active:scale-[0.99] flex flex-col"
+        className="group relative rounded-2xl bg-white border border-slate-200/90 shadow-sm overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-md hover:border-emerald-300 active:scale-[0.99] flex flex-col"
       >
-        {/* 80% High-Impact Visual Section */}
-        <div className="relative w-full pt-4 pb-2 px-4 flex flex-col items-center justify-center min-h-[220px] overflow-hidden">
-          {/* Subtle LEGO stud pattern texture in background */}
-          <div 
-            className="absolute inset-0 opacity-10 pointer-events-none"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #ffffff 18%, transparent 20%)',
-              backgroundSize: '16px 16px'
-            }}
-          />
-
-          {/* Floating Pill Badge */}
-          <div className="w-full flex items-center justify-between z-10 mb-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FFD100] text-slate-900 shadow-sm uppercase tracking-wider">
-              <Sparkles size={13} className="text-amber-800" />
+        {/* 80% Airy Visual Area with Large High-Res Character Artwork */}
+        <div className="relative w-full bg-gradient-to-b from-emerald-50/80 via-teal-50/40 to-white px-4 pt-3.5 pb-2 flex flex-col items-center justify-center">
+          {/* Top Pill Badges */}
+          <div className="w-full flex items-center justify-between mb-1 z-10">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FFD100] text-slate-900 shadow-xs uppercase tracking-wide">
+              <Sparkles size={12} className="text-amber-800" />
               <span>Coming Up</span>
             </span>
-            <span className="text-[11px] font-semibold text-emerald-100/90 bg-emerald-900/50 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-emerald-400/20">
-              Ages 5–12
+            <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-100/80 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
+              Ages 5–12 • Franklin
             </span>
           </div>
 
-          {/* Prominent High-Resolution Camp Artwork (Takes ~80% presence) */}
-          <div className="relative z-10 w-full flex items-center justify-center py-1">
+          {/* Prominent Character Graphic */}
+          <div className="py-2 flex items-center justify-center w-full">
             <img
               src="/images/client/camps-visual.png"
               onError={(e) => { e.currentTarget.src = '/images/camps.jpg'; }}
               alt="Bricks 4 Kidz Winter Camps Characters"
-              className="max-h-48 w-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)] transform group-hover:scale-105 transition-transform duration-300"
+              className="h-40 w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
             />
           </div>
         </div>
 
-        {/* 20% Sleek Action & Title Strip */}
-        <div className="relative z-10 bg-white/95 backdrop-blur-md px-4 py-3 border-t border-emerald-100 flex items-center justify-between gap-3">
+        {/* 20% Clean Action Strip */}
+        <div className="px-4 py-3 bg-white border-t border-slate-100 flex items-center justify-between gap-3">
           <div className="flex flex-col">
-            <h2 className="font-headline text-lg font-bold text-slate-900 leading-tight group-hover:text-primary transition-colors">
+            <h2 className="font-headline text-base font-bold text-slate-900 leading-tight group-hover:text-primary transition-colors">
               Winter & Spring Camps
             </h2>
-            <p className="font-body text-xs text-slate-600 font-medium">
+            <p className="font-body text-xs text-slate-500 font-medium">
               Half-Day & Full-Day LEGO® STEAM
             </p>
           </div>
 
           <button
             type="button"
-            className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#FFD100] text-slate-900 shadow-sm group-hover:bg-[#ffc400] group-hover:shadow transition-all"
+            className="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#008744] hover:bg-[#007038] text-white shadow-xs transition-colors"
           >
             <span>Peek Inside</span>
             <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
