@@ -84,9 +84,6 @@ export const HomePage: React.FC = () => {
           <h1 className="font-headline text-display-lg-mobile text-foreground text-balance font-bold leading-tight">
             Building Tomorrow's Innovators
           </h1>
-          <p className="font-body text-body-md text-muted-foreground text-pretty">
-            Ignite your child's curiosity and unlock their potential with hands-on STEAM programs, after-school enrichment, camps, and birthday parties across Franklin & Nashville.
-          </p>
 
           {/* 4 Core Benefits */}
           <div className="grid grid-cols-2 gap-gutter-sm pt-gutter-xs">
