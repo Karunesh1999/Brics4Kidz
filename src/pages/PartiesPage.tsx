@@ -385,14 +385,17 @@ export const PartiesPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button (Fully Responsive Single-Row Layout) */}
           <button
             type="submit"
-            className="w-full h-12 rounded-xl bg-primary hover:bg-primary-hover !text-white font-headline font-bold text-sm shadow-md hover:shadow-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] cursor-pointer mt-1"
+            className="w-full min-h-[48px] py-3 px-4 rounded-xl bg-primary hover:bg-primary-hover !text-white font-headline font-bold text-sm shadow-md hover:shadow-lg flex items-center justify-between transition-all active:scale-[0.98] cursor-pointer mt-1"
           >
-            <Lock size={16} className="text-white shrink-0" />
-            <span className="text-white font-bold tracking-wide">
-              Reserve Date with Stripe Checkout • ${totalPrice}.00
+            <div className="flex items-center gap-2">
+              <Lock size={16} className="text-white shrink-0" />
+              <span>Reserve with Stripe</span>
+            </div>
+            <span className="bg-white/20 text-white px-2.5 py-0.5 rounded-lg text-xs sm:text-sm font-extrabold tracking-tight shrink-0">
+              ${totalPrice}.00
             </span>
           </button>
 
