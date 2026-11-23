@@ -26,9 +26,6 @@ export const AboutPage: React.FC = () => {
           <h1 className="font-headline text-display-lg-mobile text-foreground font-bold leading-tight">
             We Learn. We Build. We Play.
           </h1>
-          <p className="font-body text-body-md text-muted-foreground leading-relaxed">
-            Bricks 4 Kidz Franklin serves Williamson County, Brentwood, and Greater Nashville with hands-on STEM learning programs built around proprietary LEGO® Technic kits.
-          </p>
         </div>
       </section>
 
