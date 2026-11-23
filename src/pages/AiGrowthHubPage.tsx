@@ -3,7 +3,7 @@ import { LEADS } from '../data/mockData';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
-import { Check, Send, MailCheck, TrendingUp, RefreshCw } from 'lucide-react';
+import { Check, Send, MailCheck, TrendingUp, MessageSquare, Building2, Sparkles, CheckCircle2 } from 'lucide-react';
 import type { LeadItem } from '../types';
 
 export const AiGrowthHubPage: React.FC = () => {
@@ -37,25 +37,31 @@ export const AiGrowthHubPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Workspace Filter Tabs */}
-      <div className="flex items-center gap-gutter-sm overflow-x-auto pb-1" role="group" aria-label="AI Hub Sections">
+      {/* Workspace Filter Tabs (Zero Cutoff Segmented Control) */}
+      <div className="grid grid-cols-3 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 gap-1">
         {[
-          { id: 'leads', label: 'Leads & Support' },
-          { id: 'schools', label: 'School Partners' },
-          { id: 'marketing', label: 'Campaigns & Apps' },
+          { id: 'leads', label: 'Leads', count: leads.length },
+          { id: 'schools', label: 'Schools', count: 3 },
+          { id: 'marketing', label: 'Campaigns', count: 4 },
         ].map((tab) => {
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
+              type="button"
               onClick={() => setActiveTab(tab.id as any)}
-              className={`shrink-0 px-4 py-1.5 rounded-full font-body text-label-sm transition-all ${
+              className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 isActive
-                  ? 'bg-primary text-primary-foreground font-bold shadow-sm'
-                  : 'bg-card text-muted-foreground border border-border hover:bg-surface-low'
+                  ? 'bg-white text-primary shadow-xs border border-primary/20'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <span>{tab.label}</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                isActive ? 'bg-primary/10 text-primary' : 'bg-slate-200/80 text-slate-500'
+              }`}>
+                {tab.count}
+              </span>
             </button>
           );
         })}
@@ -63,59 +69,134 @@ export const AiGrowthHubPage: React.FC = () => {
 
       {/* Tab 1: Leads & Support */}
       {activeTab === 'leads' && (
-        <section className="flex flex-col gap-gutter-sm">
+        <section className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-headline text-headline-md text-foreground font-bold">
-              Active AI Conversions
-            </h2>
-            <span className="text-xs text-secondary font-bold flex items-center gap-1">
-              <RefreshCw size={12} className="animate-spin" />
-              Live Sync
-            </span>
+            <div>
+              <h2 className="font-headline text-base font-bold text-foreground leading-tight">
+                Active AI Conversions
+              </h2>
+              <p className="font-body text-[11px] text-muted-foreground mt-0.5">
+                Real-time automated parent inquiries & Stripe checkouts
+              </p>
+            </div>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/70 text-[11px] font-bold shrink-0">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Live Sync</span>
+            </div>
           </div>
 
-          {leads.map((lead) => (
-            <Card key={lead.id} className="flex flex-col gap-gutter-sm shadow-sm hover:border-primary transition-colors">
-              <div className="flex items-center justify-between gap-gutter-sm">
-                <div>
-                  <h3 className="font-headline text-title-md text-foreground font-bold">
-                    {lead.name} • {lead.channel}
-                  </h3>
-                  <p className="font-body text-body-sm text-muted-foreground">{lead.inquiry}</p>
-                </div>
-                <Badge variant={lead.statusVariant === 'success' ? 'secondary' : lead.statusVariant === 'warning' ? 'accent' : 'primary'}>
-                  {lead.status}
-                </Badge>
-              </div>
+          <div className="flex flex-col gap-3">
+            {leads.map((lead) => {
+              const isPaidOrBooked = lead.status === 'Paid' || lead.status === 'Booked';
+              const displayAmount = lead.amount.replace('+', '').trim();
 
-              <p className="font-body text-body-md text-foreground/90">
-                {lead.details}
-              </p>
+              return (
+                <Card 
+                  key={lead.id} 
+                  className="flex flex-col gap-3 p-4 rounded-2xl border border-slate-200/90 bg-white shadow-xs hover:shadow-sm hover:border-primary/40 transition-all"
+                >
+                  {/* Top Header: Lead Name, Channel Badge & Status */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
+                        {lead.channel.includes('Instagram') ? (
+                          <span className="text-xs font-bold text-pink-600">IG</span>
+                        ) : lead.channel.includes('Facebook') ? (
+                          <span className="text-xs font-bold text-blue-600">FB</span>
+                        ) : lead.channel.includes('Chat') ? (
+                          <MessageSquare size={16} className="text-primary" />
+                        ) : (
+                          <Building2 size={16} className="text-amber-600" />
+                        )}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-headline text-sm font-bold text-slate-900 leading-tight">
+                          {lead.name}
+                        </span>
+                        <span className="text-[11px] text-slate-500 font-medium">
+                          via {lead.channel}
+                        </span>
+                      </div>
+                    </div>
 
-              <div className="flex items-center justify-between pt-gutter-sm border-t border-border">
-                <span className="font-mono text-mono-md text-primary font-bold tabular-nums">
-                  {lead.amount}
-                </span>
-                {lead.status !== 'Paid' && lead.status !== 'Booked' ? (
-                  <Button
-                    variant={lead.nudged ? 'outline' : 'primary'}
-                    size="sm"
-                    disabled={lead.nudged}
-                    onClick={() => handleNudge(lead.id)}
-                    className="gap-1.5"
-                  >
-                    {lead.nudged ? <Check size={14} className="text-secondary" /> : <Send size={14} />}
-                    <span>{lead.nudged ? 'Nudge Sent' : 'Send Nudge'}</span>
-                  </Button>
-                ) : (
-                  <span className="font-body text-label-sm text-secondary font-semibold flex items-center gap-1">
-                    <Check size={14} />
-                    Receipt Sent
-                  </span>
-                )}
-              </div>
-            </Card>
-          ))}
+                    {/* Status Badge */}
+                    <div>
+                      {lead.status === 'Paid' ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          <CheckCircle2 size={12} className="text-emerald-600" /> Paid
+                        </span>
+                      ) : lead.status === 'Booked' ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                          <CheckCircle2 size={12} className="text-blue-600" /> Booked
+                        </span>
+                      ) : lead.status === 'Stripe Sent' ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                          <Send size={11} className="text-purple-600" /> Stripe Sent
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                          Proposal Pending
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Inquiry Program Pill */}
+                  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200/60 text-xs font-semibold text-slate-800">
+                    <Sparkles size={13} className="text-primary shrink-0" />
+                    <span className="truncate">{lead.inquiry}</span>
+                  </div>
+
+                  {/* AI Activity Details */}
+                  <p className="text-xs text-slate-600 leading-relaxed pl-0.5">
+                    <span className="font-bold text-slate-700">AI Action: </span>
+                    {lead.details}
+                  </p>
+
+                  {/* Card Footer: Amount & Action */}
+                  <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 mt-0.5">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                        {isPaidOrBooked ? 'Collected Revenue' : 'Estimated Value'}
+                      </span>
+                      <span className="font-headline text-base font-extrabold text-primary tracking-tight">
+                        {displayAmount}
+                      </span>
+                    </div>
+
+                    {isPaidOrBooked ? (
+                      <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-bold">
+                        <Check size={13} className="text-emerald-600" />
+                        <span>Receipt Sent</span>
+                      </div>
+                    ) : (
+                      <Button
+                        variant={lead.nudged ? 'outline' : 'primary'}
+                        size="sm"
+                        disabled={lead.nudged}
+                        onClick={() => handleNudge(lead.id)}
+                        className={`h-9 px-3.5 rounded-xl text-xs font-bold gap-1.5 ${
+                          lead.nudged ? 'hover:bg-slate-50' : '!text-white shadow-xs'
+                        }`}
+                      >
+                        {lead.nudged ? (
+                          <>
+                            <Check size={14} className="text-secondary" />
+                            <span>Nudge Sent</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send size={13} className="text-white" />
+                            <span>Send Nudge</span>
+                          </>
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
         </section>
       )}
 
