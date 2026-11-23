@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Centralized Theme & Semantic Palette */
+    /* Background & Surfaces */
+    --background: 240 100% 99%; /* #F9F9FF Soft educational light */
+    --foreground: 220 14% 11%; /* #191C21 High contrast dark slate */
+
+    /* Cards & Containers */
+    --card: 0 0% 100%; /* #FFFFFF Crisp pure card */
+    --card-foreground: 220 14% 11%;
+    --card-border: 224 16% 86%; /* #C2C6D3 */
+
+    /* Primary Brand: B4K Classic Royal Blue */
+    --primary: 209 100% 32%; /* #0055A4 */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 209 100% 24%; /* #003E7A */
+
+    /* Secondary Brand: B4K STEAM Emerald Green */
+    --secondary: 148 100% 26%; /* #00843D */
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 148 100% 21%; /* #006D31 */
+
+    /* Accent Brand: B4K Playful LEGO Gold/Yellow */
+    --accent: 48 100% 47%; /* #F2C200 */
+    --accent-foreground: 220 14% 11%; /* #191C21 */
+    --accent-hover: 48 100% 42%;
+
+    /* Destructive/Tertiary: B4K LEGO Brick Red */
+    --destructive: 358 79% 47%; /* #D71920 */
+    --destructive-foreground: 0 0% 100%;
+
+    /* Muted & Subdued States */
+    --muted: 240 14% 94%; /* #EDEDF5 */
+    --muted-foreground: 220 10% 40%; /* #555A64 */
+
+    /* Structural Surface Levels */
+    --surface-lowest: 0 0% 100%;
+    --surface-low: 240 20% 97%; /* #F2F3FA */
+    --surface-container: 240 14% 94%; /* #EDEDF5 */
+    --surface-high: 240 13% 92%; /* #E7E8EF */
+    --surface-highest: 240 12% 90%; /* #E1E2E9 */
+
+    /* Borders, Inputs, Focus Rings */
+    --border: 224 16% 86%; /* #C2C6D3 */
+    --input: 224 16% 86%;
+    --ring: 209 100% 32%;
+
+    /* Status Notifications */
+    --success: 148 100% 26%;
+    --success-foreground: 0 0% 100%;
+    --warning: 48 100% 47%;
+    --warning-foreground: 220 14% 11%;
+    --info: 209 100% 32%;
+    --info-foreground: 0 0% 100%;
+
+    /* Stripe Simulated Theme */
+    --stripe-purple: 243 100% 68%; /* #635BFF */
+    --stripe-purple-hover: 243 80% 60%;
+
+    --radius: 0.75rem;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+/* Hide scrollbars globally (Native Mobile App Behavior) */
+html, body, *, *::before, *::after {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
