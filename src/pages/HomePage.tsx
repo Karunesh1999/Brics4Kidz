@@ -272,9 +272,6 @@ export const HomePage: React.FC = () => {
               <h2 id="inquiry-heading" className="font-headline text-headline-md text-foreground font-bold">
                 Book a Party or Ask Us
               </h2>
-              <p className="font-body text-body-sm text-muted-foreground">
-                Check birthday party availability, school partnerships, or reserve with instant Stripe checkout.
-              </p>
             </div>
           </div>
           {isFormOpen && (
