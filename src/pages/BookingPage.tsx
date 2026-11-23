@@ -14,6 +14,7 @@ import {
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../components/ui/Select';
 import confetti from 'canvas-confetti';
 import { SCHEDULES, PARTY_PACKAGES, CAMPS } from '../data/mockData';
 
@@ -271,19 +272,20 @@ export const BookingPage: React.FC = () => {
           </div>
 
           <Card className="flex flex-col gap-3">
-            <label className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5">
               <span className="font-headline text-label-sm text-foreground font-bold">Select Campus Location</span>
-              <select
-                value={selectedLocation}
-                onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full rounded-xl bg-card border border-border p-3 font-body text-body-sm text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-              >
-                <option value="215 Gothic Ct Suite 102, Franklin">215 Gothic Ct Suite 102, Franklin (Main Center)</option>
-                <option value="Franklin Classical School">Franklin Classical School (On-campus)</option>
-                <option value="Vine Christian Academy">Vine Christian Academy (Lifepoint Church)</option>
-                <option value="My Home (Franklin / Brentwood / Nashville)">Client Home (Franklin / Brentwood)</option>
-              </select>
-            </label>
+              <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="215 Gothic Ct Suite 102, Franklin">215 Gothic Ct Suite 102, Franklin (Main Center)</SelectItem>
+                  <SelectItem value="Franklin Classical School">Franklin Classical School (On-campus)</SelectItem>
+                  <SelectItem value="Vine Christian Academy">Vine Christian Academy (Lifepoint Church)</SelectItem>
+                  <SelectItem value="My Home (Franklin / Brentwood / Nashville)">Client Home (Franklin / Brentwood)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             <label className="flex flex-col gap-1.5">
               <span className="font-headline text-label-sm text-foreground font-bold">Preferred Date or Session</span>
@@ -297,20 +299,21 @@ export const BookingPage: React.FC = () => {
             </label>
 
             {serviceType === 'party' && (
-              <label className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-1.5">
                 <span className="font-headline text-label-sm text-foreground font-bold">Choose Party Theme</span>
-                <select
-                  value={partyTheme}
-                  onChange={(e) => setPartyTheme(e.target.value)}
-                  className="w-full rounded-xl bg-card border border-border p-3 font-body text-body-sm text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-                >
-                  <option value="Minecraft Block World">Minecraft Block World</option>
-                  <option value="Star Wars Galaxy">Star Wars Galaxy</option>
-                  <option value="Superheroes In Action">Superheroes In Action</option>
-                  <option value="Battlebots Arena Knockout">Battlebots Arena Knockout</option>
-                  <option value="Ninjago Spinners">Ninjago Spinners</option>
-                </select>
-              </label>
+                <Select value={partyTheme} onValueChange={setPartyTheme}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Choose party theme" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Minecraft Block World">Minecraft Block World</SelectItem>
+                    <SelectItem value="Star Wars Galaxy">Star Wars Galaxy</SelectItem>
+                    <SelectItem value="Superheroes In Action">Superheroes In Action</SelectItem>
+                    <SelectItem value="Battlebots Arena Knockout">Battlebots Arena Knockout</SelectItem>
+                    <SelectItem value="Ninjago Spinners">Ninjago Spinners</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             )}
           </Card>
 
@@ -352,24 +355,25 @@ export const BookingPage: React.FC = () => {
                 />
               </label>
 
-              <label className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1">
                 <span className="font-headline text-label-sm text-foreground font-bold">Child's Age *</span>
-                <select
-                  value={childAge}
-                  onChange={(e) => setChildAge(e.target.value)}
-                  className="w-full rounded-xl bg-card border border-border p-2.5 font-body text-body-sm text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-                >
-                  <option value="3">3 yrs (DUPLO)</option>
-                  <option value="4">4 yrs (Pre-K)</option>
-                  <option value="5">5 yrs (Kindergarten)</option>
-                  <option value="6">6 yrs (1st Grade)</option>
-                  <option value="7">7 yrs (2nd Grade)</option>
-                  <option value="8">8 yrs (3rd Grade)</option>
-                  <option value="9">9 yrs (4th Grade)</option>
-                  <option value="10">10 yrs (5th Grade)</option>
-                  <option value="11+">11+ yrs (Middle)</option>
-                </select>
-              </label>
+                <Select value={childAge} onValueChange={setChildAge}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Age" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="3">3 yrs (DUPLO)</SelectItem>
+                    <SelectItem value="4">4 yrs (Pre-K)</SelectItem>
+                    <SelectItem value="5">5 yrs (Kindergarten)</SelectItem>
+                    <SelectItem value="6">6 yrs (1st Grade)</SelectItem>
+                    <SelectItem value="7">7 yrs (2nd Grade)</SelectItem>
+                    <SelectItem value="8">8 yrs (3rd Grade)</SelectItem>
+                    <SelectItem value="9">9 yrs (4th Grade)</SelectItem>
+                    <SelectItem value="10">10 yrs (5th Grade)</SelectItem>
+                    <SelectItem value="11+">11+ yrs (Middle)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <label className="flex flex-col gap-1">

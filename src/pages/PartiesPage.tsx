@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../components/ui/Select';
 import { PARTY_PACKAGES } from '../data/mockData';
 import { Check, Star, PartyPopper, Sparkles, Gift } from 'lucide-react';
 
@@ -163,45 +164,48 @@ export const PartiesPage: React.FC = () => {
         </div>
 
         <form onSubmit={handleFormSubmit} className="flex flex-col gap-gutter-md">
-          <label className="flex flex-col gap-gutter-xs">
+          <div className="flex flex-col gap-gutter-xs">
             <span className="font-body text-label-sm text-foreground font-semibold">Selected Package</span>
-            <select
-              value={selectedPkg}
-              onChange={(e) => setSelectedPkg(e.target.value)}
-              className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-md text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-            >
-              <option>Premium — $249 (10 guests, 75m)</option>
-              <option>Supreme — $349 (12 guests, 90m)</option>
-            </select>
-          </label>
+            <Select value={selectedPkg} onValueChange={setSelectedPkg}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select package" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Premium — $249 (10 guests, 75m)">Premium — $249 (10 guests, 75m)</SelectItem>
+                <SelectItem value="Supreme — $349 (12 guests, 90m)">Supreme — $349 (12 guests, 90m)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-          <label className="flex flex-col gap-gutter-xs">
+          <div className="flex flex-col gap-gutter-xs">
             <span className="font-body text-label-sm text-foreground font-semibold">Party Theme</span>
-            <select
-              value={selectedTheme}
-              onChange={(e) => setSelectedTheme(e.target.value)}
-              className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-md text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-            >
-              <option>Minecraft Block World</option>
-              <option>Star Wars Galaxy Adventures</option>
-              <option>Superheroes In Motion</option>
-              <option>Battlebots Arena Knockout</option>
-              <option>Ninjago Spinners Derby</option>
-            </select>
-          </label>
+            <Select value={selectedTheme} onValueChange={setSelectedTheme}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select party theme" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Minecraft Block World">Minecraft Block World</SelectItem>
+                <SelectItem value="Star Wars Galaxy Adventures">Star Wars Galaxy Adventures</SelectItem>
+                <SelectItem value="Superheroes In Motion">Superheroes In Motion</SelectItem>
+                <SelectItem value="Battlebots Arena Knockout">Battlebots Arena Knockout</SelectItem>
+                <SelectItem value="Ninjago Spinners Derby">Ninjago Spinners Derby</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-          <label className="flex flex-col gap-gutter-xs">
+          <div className="flex flex-col gap-gutter-xs">
             <span className="font-body text-label-sm text-foreground font-semibold">Location / Venue</span>
-            <select
-              value={selectedLoc}
-              onChange={(e) => setSelectedLoc(e.target.value)}
-              className="w-full rounded-xl bg-card border border-border px-gutter-md py-2.5 font-body text-body-md text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-            >
-              <option>My Home (Franklin / Brentwood / Nashville)</option>
-              <option>B4K Venue ($120 for 2 hours at 215 Gothic Ct)</option>
-              <option>Other Venue / School / Church</option>
-            </select>
-          </label>
+            <Select value={selectedLoc} onValueChange={setSelectedLoc}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select location / venue" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="My Home (Franklin / Brentwood / Nashville)">My Home (Franklin / Brentwood / Nashville)</SelectItem>
+                <SelectItem value="B4K Venue ($120 for 2 hours at 215 Gothic Ct)">B4K Venue ($120 for 2 hours at 215 Gothic Ct)</SelectItem>
+                <SelectItem value="Other Venue / School / Church">Other Venue / School / Church</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           <label className="flex flex-col gap-gutter-xs">
             <span className="font-body text-label-sm text-foreground font-semibold">Host Name *</span>

@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ChevronDown, ChevronUp,
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../components/ui/Select';
 import { FAQS } from '../data/mockData';
 
 export const ContactPage: React.FC = () => {
@@ -161,20 +162,21 @@ export const ContactPage: React.FC = () => {
               </label>
             </div>
 
-            <label className="flex flex-col gap-1 text-left">
+            <div className="flex flex-col gap-1 text-left">
               <span className="font-headline text-label-sm text-foreground font-bold">Inquiry Topic</span>
-              <select
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                className="w-full rounded-xl bg-card border border-border p-2.5 font-body text-body-sm text-foreground focus:border-primary focus:ring-1 focus:ring-ring"
-              >
-                <option value="General Question">General Question</option>
-                <option value="Winter/Summer Camps">Winter & Summer Camps</option>
-                <option value="Birthday Party Booking">Birthday Party Booking</option>
-                <option value="School Partnership / PTO">School Partnership / PTO Assembly</option>
-                <option value="Special Needs & Adaptations">Special Needs & Accommodations</option>
-              </select>
-            </label>
+              <Select value={subject} onValueChange={setSubject}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select topic" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="General Question">General Question</SelectItem>
+                  <SelectItem value="Winter/Summer Camps">Winter & Summer Camps</SelectItem>
+                  <SelectItem value="Birthday Party Booking">Birthday Party Booking</SelectItem>
+                  <SelectItem value="School Partnership / PTO">School Partnership / PTO Assembly</SelectItem>
+                  <SelectItem value="Special Needs & Adaptations">Special Needs & Accommodations</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             <label className="flex flex-col gap-1 text-left">
               <span className="font-headline text-label-sm text-foreground font-bold">Message Details *</span>
