@@ -5,7 +5,7 @@ import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../components/ui/Select';
 import { PARTY_PACKAGES } from '../data/mockData';
-import { Check, Star, PartyPopper, Sparkles, Gift } from 'lucide-react';
+import { Check, Star, PartyPopper, Gift } from 'lucide-react';
 
 export const PartiesPage: React.FC = () => {
   const { onOpenStripe } = useOutletContext<{
@@ -232,7 +232,6 @@ export const PartiesPage: React.FC = () => {
           </label>
 
           <Button variant="primary" size="lg" type="submit" className="w-full gap-2 shadow-md">
-            <Sparkles size={16} />
             <span>Reserve Date with Stripe Checkout</span>
           </Button>
         </form>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from './ui/Modal';
 import { Button } from './ui/Button';
-import { CreditCard, Lock, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import { CreditCard, Lock, CheckCircle2, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface StripeModalProps {
@@ -225,7 +225,6 @@ export const StripeModal: React.FC<StripeModalProps> = ({
               isLoading={isProcessing}
               className="w-full gap-2 shadow-md"
             >
-              <Sparkles size={16} />
               <span>Pay {bookingItem.price} with Stripe</span>
             </Button>
           </div>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { CAMPS } from '../data/mockData';
-import { Card, CardHeader, CardTitle, CardFooter } from '../components/ui/Card';
+import { Card, CardHeader, CardTitle } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
-import { Sparkles, MapPin, Clock, ShieldCheck } from 'lucide-react';
+import { MapPin, Clock } from 'lucide-react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import type { CampItem } from '../types';
 
@@ -38,9 +38,6 @@ export const CampsPage: React.FC = () => {
             className="w-20 h-20 object-contain rounded-xl bg-white/20 p-1 border-2 border-primary-foreground shrink-0 shadow-sm"
           />
         </div>
-        <p className="font-body text-body-sm text-secondary-foreground/90 leading-relaxed">
-          Hosted at <strong>215 Gothic Ct Suite 102, Franklin, TN</strong> (Dance Mania Nashville). Choose single-day drop-ins, half-day, or full-week sessions.
-        </p>
       </section>
 
       {/* Camp Season Tabs */}
@@ -108,27 +105,30 @@ export const CampsPage: React.FC = () => {
               </div>
             </div>
 
-            <CardFooter>
-              <div className="flex items-baseline gap-1.5 font-body">
-                <span className="text-base font-bold text-primary tracking-tight">
+            <div className="pt-2.5 border-t border-slate-100 flex flex-col gap-2.5 font-body">
+              {/* Clean Price & Age Row (No Wrapping) */}
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-lg font-bold text-primary tracking-tight whitespace-nowrap">
                   {camp.price}
                 </span>
-                <span className="text-xs text-slate-500 font-medium">
-                  • {camp.age}
+                <span className="text-xs text-slate-500 font-medium whitespace-nowrap">
+                  • Ages {camp.age}
                 </span>
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* Full-Width Touch-Friendly Action Buttons */}
+              <div className="grid grid-cols-2 gap-2 w-full">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => navigate('/booking')}
+                  className="w-full h-9 text-xs font-semibold rounded-xl hover:bg-slate-50"
                 >
                   Configure
                 </Button>
                 <Button
                   variant="primary"
                   size="sm"
-                  className="gap-1.5 shadow-sm"
                   onClick={() =>
                     onOpenStripe({
                       title: camp.title,
@@ -136,25 +136,14 @@ export const CampsPage: React.FC = () => {
                       subtitle: `${camp.track} • ${camp.location}`,
                     })
                   }
+                  className="w-full h-9 text-xs font-bold rounded-xl shadow-xs whitespace-nowrap"
                 >
-                  <Sparkles size={14} />
-                  <span>Stripe Pay</span>
+                  Stripe Pay
                 </Button>
               </div>
-            </CardFooter>
+            </div>
           </Card>
         ))}
-      </section>
-
-      {/* Camp Safety Box */}
-      <section className="rounded-2xl bg-surface-low border border-border p-gutter-md flex items-start gap-3">
-        <ShieldCheck size={24} className="text-secondary shrink-0 mt-0.5" />
-        <div className="flex flex-col gap-1">
-          <h3 className="font-headline text-title-md text-foreground font-bold">Safe & Certified Environment</h3>
-          <p className="font-body text-body-sm text-muted-foreground leading-relaxed">
-            Nut-free facility, CPR-certified teachers, low 1:8 counselor ratio, and contactless check-in/check-out system.
-          </p>
-        </div>
       </section>
 
     </div>

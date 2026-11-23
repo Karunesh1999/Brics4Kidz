@@ -8,8 +8,7 @@ import {
   QrCode,
   School,
   Trees,
-  Cake,
-  Sparkles
+  Cake
 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -544,7 +543,6 @@ export const BookingPage: React.FC = () => {
                 isLoading={isProcessing}
                 className="flex-1 gap-2 shadow-md"
               >
-                <Sparkles size={16} />
                 <span>Pay ${grandTotal}.00</span>
               </Button>
             </div>

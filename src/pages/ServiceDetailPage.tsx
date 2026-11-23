@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link, useNavigate, useOutletContext } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Sparkles, Calendar } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Calendar } from 'lucide-react';
 import { PROGRAMS } from '../data/mockData';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -73,7 +73,6 @@ export const ServiceDetailPage: React.FC = () => {
                 })
               }
             >
-              <Sparkles size={18} />
               <span>Enroll / Reserve Now ({program.priceOrNote})</span>
             </Button>
           </div>

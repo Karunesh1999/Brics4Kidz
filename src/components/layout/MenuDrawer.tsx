@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Home, Compass, Calendar, PartyPopper, Images, Info, PhoneCall, Bot, Sparkles, MapPin, Phone, Mail } from 'lucide-react';
+import { X, Home, Compass, Calendar, PartyPopper, Images, Info, PhoneCall, Bot, MapPin, Phone, Mail } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 interface MenuDrawerProps {
@@ -26,7 +26,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-foreground/60 backdrop-blur-sm flex justify-end animate-in fade-in duration-150">
       <div className="w-80 max-w-[85%] bg-card h-full p-5 flex flex-col gap-4 shadow-2xl animate-in slide-in-from-right duration-200 overflow-y-auto">
-        
+
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border pb-3 shrink-0">
           <div className="flex items-center gap-2.5">
@@ -105,7 +105,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
             onClick={() => handleNav('/booking')}
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-surface-low text-left border-b border-border/40 font-bold text-primary"
           >
-            <Sparkles size={18} className="text-accent-foreground" />
+
             <span>Online Booking & Checkout</span>
           </button>
 

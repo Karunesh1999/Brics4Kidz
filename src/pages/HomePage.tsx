@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, PartyPopper, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
+import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, PartyPopper, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
@@ -296,7 +296,6 @@ export const HomePage: React.FC = () => {
             onClick={() => setIsFormOpen(true)}
             className="w-full gap-2 shadow-sm font-bold mt-1"
           >
-            <Sparkles size={16} />
             <span>Book a Party or Ask Us</span>
             <ChevronDown size={16} />
           </Button>

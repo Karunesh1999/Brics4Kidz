@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bot, X, Send, Sparkles, CreditCard, ChevronRight } from 'lucide-react';
+import { Bot, X, Send, CreditCard, ChevronRight } from 'lucide-react';
 import { Button } from './ui/Button';
 import type { AiChatMessage } from '../types';
 
@@ -172,7 +172,7 @@ export const BrickBotModal: React.FC<BrickBotModalProps> = ({
 
           {isTyping && (
             <div className="self-start flex items-center gap-1.5 p-3 rounded-2xl bg-surface-low border border-border text-muted-foreground text-body-sm">
-              <Sparkles size={14} className="animate-spin text-primary" />
+              <Bot size={14} className="animate-pulse text-primary" />
               <span>BrickBot is thinking...</span>
             </div>
           )}
