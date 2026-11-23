@@ -20,25 +20,6 @@ export const AiGrowthHubPage: React.FC = () => {
   return (
     <div className="flex flex-col gap-gutter-lg pt-gutter-md pb-12">
       
-      {/* Top Header Card */}
-      <div className="rounded-2xl bg-primary text-primary-foreground p-gutter-md flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-destructive text-destructive-foreground flex flex-col items-center justify-center font-bold text-xs">
-            <span>B4K</span>
-            <span className="font-mono text-[9px]">AI</span>
-          </div>
-          <div>
-            <h1 className="font-headline text-title-md font-bold leading-tight">Bricks 4 Kidz AI</h1>
-            <p className="font-body text-label-sm text-primary-foreground/90">FRANKLIN GROWTH HUB</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-label-sm font-bold shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-          <span>Auto-Pilot ON</span>
-        </div>
-      </div>
-
       {/* Conversion Metrics */}
       <section aria-label="AI Conversion Summary" className="grid grid-cols-2 gap-gutter-sm">
         <div className="rounded-2xl bg-card border border-border p-gutter-md flex flex-col gap-gutter-xs shadow-sm">
