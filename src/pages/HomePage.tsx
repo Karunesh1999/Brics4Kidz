@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useOutletContext, useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, Sparkles } from 'lucide-react';
+import { Link, useOutletContext } from 'react-router-dom';
+import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
@@ -11,7 +11,6 @@ export const HomePage: React.FC = () => {
   const { onOpenStripe } = useOutletContext<{
     onOpenStripe: (item: { title: string; price: string; subtitle?: string }) => void;
   }>();
-  const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'after-school' | 'camps' | 'homeschool'>('all');
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
