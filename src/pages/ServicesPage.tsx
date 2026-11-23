@@ -45,9 +45,6 @@ export const ServicesPage: React.FC = () => {
           <h1 className="font-headline text-display-lg-mobile text-foreground font-bold leading-tight">
             Our STEAM Programs
           </h1>
-          <p className="font-body text-body-md text-muted-foreground text-pretty">
-            Hands-on LEGO® engineering, robotics, coding, and enrichment programs designed for schools, homeschoolers, camps, and community groups.
-          </p>
         </div>
       </section>
 
