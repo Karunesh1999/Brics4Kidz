@@ -17,17 +17,17 @@ export const ServicesPage: React.FC = () => {
 
   const getIcon = (name: string) => {
     switch (name) {
-      case 'GraduationCap': return <School size={22} className="text-primary" />;
-      case 'Bot': return <Bot size={22} className="text-secondary" />;
-      case 'Blocks': return <Blocks size={22} className="text-destructive" />;
-      case 'Trees': return <Trees size={22} className="text-secondary" />;
-      case 'Users': return <Users size={22} className="text-primary" />;
-      default: return <School size={22} />;
+      case 'GraduationCap': return <School size={24} className="text-primary" />;
+      case 'Bot': return <Bot size={24} className="text-secondary" />;
+      case 'Blocks': return <Blocks size={24} className="text-destructive" />;
+      case 'Trees': return <Trees size={24} className="text-secondary" />;
+      case 'Users': return <Users size={24} className="text-primary" />;
+      default: return <School size={24} />;
     }
   };
 
   return (
-    <div className="flex flex-col gap-gutter-lg pt-gutter-md pb-6">
+    <div className="flex flex-col gap-gutter-lg pt-gutter-md pb-24">
       
       {/* Page Header & Hero */}
       <section className="rounded-2xl bg-card border border-border overflow-hidden shadow-sm">
@@ -72,18 +72,18 @@ export const ServicesPage: React.FC = () => {
         })}
       </div>
 
-      {/* Program Directory (Attractive & Balanced Redesign) */}
-      <section aria-label="Program List" className="flex flex-col gap-3">
+      {/* Program Directory (Spacious, Attractive & Modern Card Design) */}
+      <section aria-label="Program List" className="flex flex-col gap-5">
         {filteredPrograms.map((prog: ProgramItem) => (
           <div
             key={prog.id}
-            className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs hover:border-primary/50 hover:shadow-sm transition-all flex flex-col gap-3 group"
+            className="rounded-2xl border border-border/80 bg-card p-5 sm:p-6 shadow-sm hover:shadow-md hover:border-primary/40 transition-all flex flex-col gap-4 group"
           >
             {/* Top Row: Icon + Age Badge & Program Title */}
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3.5">
                 <div
-                  className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border ${
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
                     prog.ageGroup === 'elementary'
                       ? 'bg-primary/10 border-primary/20 text-primary'
                       : prog.ageGroup === 'prek'
@@ -94,9 +94,9 @@ export const ServicesPage: React.FC = () => {
                   {getIcon(prog.iconName)}
                 </div>
 
-                <div className="flex flex-col gap-0.5">
+                <div className="flex flex-col gap-1">
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-md inline-block self-start ${
+                    className={`text-xs font-bold px-2.5 py-0.5 rounded-full inline-block self-start ${
                       prog.ageGroup === 'elementary'
                         ? 'bg-blue-50 text-blue-700 border border-blue-100'
                         : prog.ageGroup === 'prek'
@@ -107,7 +107,7 @@ export const ServicesPage: React.FC = () => {
                     {prog.ageLabel}
                   </span>
                   <Link to={`/services/${prog.slug}`}>
-                    <h3 className="font-headline text-base font-bold text-slate-900 leading-snug group-hover:text-primary transition-colors">
+                    <h3 className="font-headline text-lg sm:text-xl font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
                       {prog.title}
                     </h3>
                   </Link>
@@ -116,51 +116,50 @@ export const ServicesPage: React.FC = () => {
 
               <Link
                 to={`/services/${prog.slug}`}
-                className="text-slate-400 group-hover:text-primary transition-colors p-1"
+                className="text-muted-foreground group-hover:text-primary transition-colors p-1 shrink-0"
                 aria-label={`View details for ${prog.title}`}
               >
-                <ChevronRight size={18} />
+                <ChevronRight size={22} />
               </Link>
             </div>
 
-            {/* Feature Highlights (Clean Micro-bullets) */}
+            {/* Feature Highlights */}
             {prog.features && prog.features.length > 0 && (
-              <div className="flex flex-col gap-1.5 py-1 px-1">
+              <div className="flex flex-col gap-2.5 bg-surface-low/80 rounded-xl p-3.5 sm:p-4 border border-border/60">
                 {prog.features.slice(0, 2).map((feat, fIdx) => (
-                  <div key={fIdx} className="flex items-center gap-2 text-xs text-slate-600">
-                    <div className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
-                    <span className="truncate">{feat}</span>
+                  <div key={fIdx} className="flex items-start gap-2.5 text-sm text-foreground/85">
+                    <div className="w-2 h-2 rounded-full bg-secondary shrink-0 mt-1.5" />
+                    <span className="leading-snug">{feat}</span>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Bottom Row: Tuition Price & Clean Actions (Standard Touch-Friendly Size) */}
-            <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-1 gap-2">
-              <div className="flex flex-col min-w-0">
-                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider leading-none mb-0.5">
-                  Tuition
-                </span>
-                <span className="font-headline text-sm font-extrabold text-primary tracking-tight leading-snug truncate">
-                  {prog.priceOrNote}
-                </span>
-              </div>
+            {/* Tuition Price Bar */}
+            <div className="flex items-center justify-between bg-primary/5 rounded-xl px-4 py-2.5 border border-primary/15">
+              <span className="text-xs uppercase font-bold text-muted-foreground tracking-wider">
+                Tuition
+              </span>
+              <span className="font-headline text-base sm:text-lg font-bold text-primary tracking-tight">
+                {prog.priceOrNote}
+              </span>
+            </div>
 
-              <div className="flex items-center gap-2 shrink-0">
-                <Link
-                  to={`/services/${prog.slug}`}
-                  className="h-10 px-4 rounded-xl border border-slate-200 bg-card hover:bg-slate-50 text-xs sm:text-sm font-semibold text-slate-700 transition-all active:scale-[0.98] flex items-center justify-center whitespace-nowrap shadow-xs"
-                >
-                  Learn More
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => navigate('/booking')}
-                  className="h-10 px-5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-bold transition-all shadow-sm active:scale-[0.98] cursor-pointer flex items-center justify-center whitespace-nowrap"
-                >
-                  Enroll
-                </button>
-              </div>
+            {/* Action Buttons */}
+            <div className="grid grid-cols-2 gap-3 pt-0.5">
+              <Link
+                to={`/services/${prog.slug}`}
+                className="h-11 rounded-xl border border-border bg-card hover:bg-surface-low text-sm font-semibold text-foreground transition-all active:scale-[0.98] flex items-center justify-center whitespace-nowrap shadow-xs"
+              >
+                Learn More
+              </Link>
+              <button
+                type="button"
+                onClick={() => navigate('/booking')}
+                className="h-11 rounded-xl bg-primary hover:bg-primary-hover text-white text-sm font-bold transition-all shadow-sm active:scale-[0.98] cursor-pointer flex items-center justify-center whitespace-nowrap"
+              >
+                Enroll
+              </button>
             </div>
           </div>
         ))}

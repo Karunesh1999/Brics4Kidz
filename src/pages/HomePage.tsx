@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, PartyPopper, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
+import { Star, Wrench, Users, Lightbulb, School, Trees, Cake, MapPin, ChevronRight, Check, PartyPopper, ChevronDown, ChevronUp, ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
@@ -184,43 +184,54 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Schedule Cards List */}
-        <div className="flex flex-col gap-gutter-sm">
+        <div className="flex flex-col gap-3.5">
           {filteredSchedules.map((sch: ScheduleItem) => (
-            <Card key={sch.id} className="flex flex-col gap-gutter-sm shadow-sm hover:border-primary transition-colors">
-              <CardHeader>
-                <div className="flex items-center justify-between gap-gutter-sm">
-                  <Badge variant={sch.category === 'after-school' ? 'primary' : sch.category === 'camps' ? 'secondary' : 'default'}>
+            <Card
+              key={sch.id}
+              className="flex flex-col gap-3.5 p-4 sm:p-5 rounded-2xl shadow-sm hover:shadow-md border border-border/80 hover:border-primary/40 transition-all bg-card"
+            >
+              <CardHeader className="gap-2 p-0">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <Badge variant={sch.category === 'after-school' ? 'primary' : sch.category === 'camps' ? 'secondary' : 'default'} className="px-3 py-1 text-xs font-semibold">
                     {sch.categoryLabel}
                   </Badge>
-                  <span className="font-body text-xs font-medium text-slate-500">
-                    {sch.sessions} • <span className="font-semibold text-slate-700">{sch.spotsLeft} spots left</span>
+                  <span className="font-body text-xs font-medium text-slate-500 bg-surface-container/60 px-2.5 py-1 rounded-full border border-border/60">
+                    {sch.sessions} • <span className="font-semibold text-primary">{sch.spotsLeft} spots left</span>
                   </span>
                 </div>
-                <CardTitle className="leading-snug">{sch.title}</CardTitle>
-                <CardDescription className="flex items-center gap-1.5">
-                  <MapPin size={15} className="text-destructive shrink-0" />
-                  <span>{sch.location}</span>
+                <CardTitle className="text-base sm:text-lg font-headline font-bold text-foreground leading-snug mt-1">
+                  {sch.title}
+                </CardTitle>
+                <CardDescription className="flex items-start gap-1.5 text-xs sm:text-sm text-muted-foreground mt-0.5">
+                  <MapPin size={16} className="text-destructive shrink-0 mt-0.5" />
+                  <span className="font-medium text-foreground/80">{sch.location}</span>
                 </CardDescription>
               </CardHeader>
 
-              <div>
-                <p className="font-body text-body-sm text-muted-foreground tabular-nums">
-                  {sch.dates} • {sch.time}
-                </p>
+              <div className="bg-surface-low/80 rounded-xl p-2.5 sm:p-3 border border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs sm:text-sm text-muted-foreground">
+                <div className="flex items-center gap-1.5">
+                  <Calendar size={14} className="text-primary shrink-0" />
+                  <span>{sch.dates}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Clock size={14} className="text-slate-400 shrink-0" />
+                  <span>{sch.time}</span>
+                </div>
               </div>
 
-              <CardFooter>
+              <CardFooter className="pt-3 border-t border-border/70 p-0 flex items-center justify-between gap-2 mt-auto">
                 <div className="flex items-baseline gap-1.5 font-body">
-                  <span className="text-base font-bold text-primary tracking-tight">
+                  <span className="text-xl sm:text-2xl font-headline font-extrabold text-primary tracking-tight">
                     {sch.price}
                   </span>
-                  <span className="text-xs text-slate-500 font-medium">
+                  <span className="text-xs sm:text-sm text-muted-foreground font-medium">
                     • {sch.age}
                   </span>
                 </div>
                 <Button
                   variant="primary"
-                  size="sm"
+                  size="md"
+                  className="h-10 px-5 text-sm font-semibold rounded-xl shadow-sm hover:shadow transition-all"
                   onClick={() =>
                     onOpenStripe({
                       title: sch.title,
