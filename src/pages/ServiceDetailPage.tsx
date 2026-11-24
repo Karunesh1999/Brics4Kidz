@@ -41,12 +41,22 @@ export const ServiceDetailPage: React.FC = () => {
 
       {/* Hero Header */}
       <section className="rounded-2xl bg-card border border-border overflow-hidden shadow-sm">
-        <div className="w-full bg-slate-50 flex items-center justify-center overflow-hidden">
+        <div
+          className={`w-full flex items-center justify-center overflow-hidden ${
+            program.imageUrl.includes('stem-benefits')
+              ? 'bg-gradient-to-b from-[#071322] to-[#0B1E36] p-4 sm:p-6'
+              : 'bg-slate-50'
+          }`}
+        >
           <img
             src={program.imageUrl}
             onError={(e) => { e.currentTarget.src = '/images/hero-lego.jpg'; }}
             alt={program.title}
-            className="w-full h-auto block"
+            className={`w-full h-auto block ${
+              program.imageUrl.includes('stem-benefits')
+                ? 'max-h-[340px] object-contain drop-shadow-md'
+                : ''
+            }`}
           />
         </div>
         <div className="p-gutter-md flex flex-col gap-gutter-sm">
