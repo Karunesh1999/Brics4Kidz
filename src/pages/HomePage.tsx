@@ -139,14 +139,9 @@ export const HomePage: React.FC = () => {
 
       {/* Upcoming Schedules */}
       <section id="schedules" aria-labelledby="schedules-heading" className="flex flex-col gap-gutter-sm">
-        <div className="flex items-center justify-between">
-          <h2 id="schedules-heading" className="font-headline text-headline-md text-foreground font-bold">
-            Upcoming Schedules
-          </h2>
-          <span className="font-mono text-label-sm text-muted-foreground tabular-nums font-semibold bg-surface-container px-2.5 py-0.5 rounded-full border border-border">
-            {filteredSchedules.length} {filteredSchedules.length === 1 ? 'program' : 'programs'}
-          </span>
-        </div>
+        <h2 id="schedules-heading" className="font-headline text-headline-md text-foreground font-bold">
+          Upcoming Schedules
+        </h2>
 
         {/* Program Filter Chips */}
         <div className="flex items-center gap-gutter-sm overflow-x-auto pb-1" role="group" aria-label="Filter by program type">

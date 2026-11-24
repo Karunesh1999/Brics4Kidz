@@ -189,17 +189,28 @@ export const BookingPage: React.FC = () => {
                     setSelectedItemId(camp.id);
                     setSelectedLocation(camp.location);
                   }}
-                  className={`border-2 ${
+                  className={`border-2 p-3.5 transition-all ${
                     selectedItemId === camp.id ? 'border-secondary bg-secondary/5' : 'border-border'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Badge variant="secondary">{camp.track}</Badge>
-                      <h3 className="font-headline text-title-md text-foreground font-bold mt-1">{camp.title}</h3>
-                      <p className="font-body text-body-sm text-muted-foreground">{camp.time} • {camp.location}</p>
+                  <div className="flex flex-col gap-1 w-full">
+                    {/* Top Row: Badge & Price */}
+                    <div className="flex items-center justify-between gap-2">
+                      <Badge variant="secondary" className="self-start">{camp.track}</Badge>
+                      <span className="font-headline text-sm sm:text-base text-primary font-bold shrink-0">
+                        {camp.price}
+                      </span>
                     </div>
-                    <span className="font-mono text-title-md text-primary font-bold shrink-0">{camp.price}</span>
+
+                    {/* Middle Row: Title */}
+                    <h3 className="font-headline text-sm sm:text-base text-foreground font-bold leading-snug mt-1">
+                      {camp.title}
+                    </h3>
+
+                    {/* Bottom Row: Time & Location */}
+                    <p className="font-body text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                      {camp.time} • {camp.location}
+                    </p>
                   </div>
                 </Card>
               ))}
@@ -214,17 +225,28 @@ export const BookingPage: React.FC = () => {
                     setSelectedLocation(sch.location);
                     setSelectedDate(sch.dates);
                   }}
-                  className={`border-2 ${
+                  className={`border-2 p-3.5 transition-all ${
                     selectedItemId === sch.id ? 'border-primary bg-primary/5' : 'border-border'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Badge variant="primary">{sch.categoryLabel}</Badge>
-                      <h3 className="font-headline text-title-md text-foreground font-bold mt-1">{sch.title}</h3>
-                      <p className="font-body text-body-sm text-muted-foreground">{sch.dates} • {sch.location}</p>
+                  <div className="flex flex-col gap-1 w-full">
+                    {/* Top Row: Badge & Price */}
+                    <div className="flex items-center justify-between gap-2">
+                      <Badge variant="primary" className="self-start">{sch.categoryLabel}</Badge>
+                      <span className="font-headline text-sm sm:text-base text-primary font-bold shrink-0">
+                        {sch.price}
+                      </span>
                     </div>
-                    <span className="font-mono text-title-md text-primary font-bold shrink-0">{sch.price}</span>
+
+                    {/* Middle Row: Title */}
+                    <h3 className="font-headline text-sm sm:text-base text-foreground font-bold leading-snug mt-1">
+                      {sch.title}
+                    </h3>
+
+                    {/* Bottom Row: Dates & Location */}
+                    <p className="font-body text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                      {sch.dates} • {sch.location}
+                    </p>
                   </div>
                 </Card>
               ))}
@@ -235,17 +257,30 @@ export const BookingPage: React.FC = () => {
                   key={pkg.id}
                   variant="interactive"
                   onClick={() => setSelectedItemId(pkg.id)}
-                  className={`border-2 ${
+                  className={`border-2 p-3.5 transition-all ${
                     selectedItemId === pkg.id ? 'border-destructive bg-destructive/5' : 'border-border'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <Badge variant={pkg.isPopular ? 'accent' : 'default'}>{pkg.guests} • {pkg.duration}</Badge>
-                      <h3 className="font-headline text-title-md text-foreground font-bold mt-1">{pkg.name}</h3>
-                      <p className="font-body text-body-sm text-muted-foreground">{pkg.description}</p>
+                  <div className="flex flex-col gap-1 w-full">
+                    {/* Top Row: Badge & Price */}
+                    <div className="flex items-center justify-between gap-2">
+                      <Badge variant={pkg.isPopular ? 'accent' : 'default'} className="self-start">
+                        {pkg.guests} • {pkg.duration}
+                      </Badge>
+                      <span className="font-headline text-sm sm:text-base text-primary font-bold shrink-0">
+                        {pkg.price}
+                      </span>
                     </div>
-                    <span className="font-mono text-title-md text-primary font-bold shrink-0">{pkg.price}</span>
+
+                    {/* Middle Row: Title */}
+                    <h3 className="font-headline text-sm sm:text-base text-foreground font-bold leading-snug mt-1">
+                      {pkg.name}
+                    </h3>
+
+                    {/* Bottom Row: Description */}
+                    <p className="font-body text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                      {pkg.description}
+                    </p>
                   </div>
                 </Card>
               ))}

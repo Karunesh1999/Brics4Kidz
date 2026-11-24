@@ -135,13 +135,13 @@ export const ServicesPage: React.FC = () => {
               </div>
             )}
 
-            {/* Bottom Row: Tuition Price & Clean Actions */}
-            <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 mt-0.5">
-              <div className="flex flex-col">
-                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+            {/* Bottom Row: Tuition Price & Clean Actions (Standard Touch-Friendly Size) */}
+            <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-1 gap-2">
+              <div className="flex flex-col min-w-0">
+                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider leading-none mb-0.5">
                   Tuition
                 </span>
-                <span className="font-headline text-sm font-extrabold text-primary tracking-tight whitespace-nowrap">
+                <span className="font-headline text-sm font-extrabold text-primary tracking-tight leading-snug truncate">
                   {prog.priceOrNote}
                 </span>
               </div>
@@ -149,14 +149,14 @@ export const ServicesPage: React.FC = () => {
               <div className="flex items-center gap-2 shrink-0">
                 <Link
                   to={`/services/${prog.slug}`}
-                  className="h-8.5 px-3 rounded-xl border border-slate-200 bg-card hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all active:scale-[0.98] flex items-center justify-center whitespace-nowrap"
+                  className="h-10 px-4 rounded-xl border border-slate-200 bg-card hover:bg-slate-50 text-xs sm:text-sm font-semibold text-slate-700 transition-all active:scale-[0.98] flex items-center justify-center whitespace-nowrap shadow-xs"
                 >
                   Learn More
                 </Link>
                 <button
                   type="button"
                   onClick={() => navigate('/booking')}
-                  className="h-8.5 px-4 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all shadow-xs active:scale-[0.98] cursor-pointer flex items-center justify-center whitespace-nowrap"
+                  className="h-10 px-5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-bold transition-all shadow-sm active:scale-[0.98] cursor-pointer flex items-center justify-center whitespace-nowrap"
                 >
                   Enroll
                 </button>
