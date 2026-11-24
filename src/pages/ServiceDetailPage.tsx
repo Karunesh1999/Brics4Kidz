@@ -85,18 +85,20 @@ export const ServiceDetailPage: React.FC = () => {
         <h2 className="font-headline text-headline-md text-foreground font-bold">
           Program Overview
         </h2>
-        <Card>
-          <p className="font-body text-body-md text-foreground/90 leading-relaxed">
-            {program.longDescription}
-          </p>
+        <Card className="p-4 sm:p-5 rounded-2xl border border-border/80 shadow-sm flex flex-col gap-4">
+          <div className="bg-primary/5 rounded-xl p-3.5 sm:p-4 border border-primary/15">
+            <p className="font-body text-sm sm:text-base text-foreground/90 font-medium leading-relaxed">
+              {program.longDescription}
+            </p>
+          </div>
 
-          <div className="pt-4 mt-4 border-t border-border flex flex-col gap-2">
-            <h3 className="font-headline text-title-md text-foreground font-bold">What's Included:</h3>
+          <div className="pt-2 flex flex-col gap-2.5">
+            <h3 className="font-headline text-sm sm:text-base text-foreground font-bold">What's Included:</h3>
             <div className="grid grid-cols-1 gap-2">
               {program.features.map((feat, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 text-body-sm text-foreground">
+                <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-foreground/85">
                   <CheckCircle2 size={16} className="text-secondary shrink-0 mt-0.5" />
-                  <span>{feat}</span>
+                  <span className="leading-snug">{feat}</span>
                 </div>
               ))}
             </div>
